@@ -4,6 +4,7 @@
 # But not these files/directories...
 !.gitignore
 !README.md
+!LICENSE
 !src/
 !adventist-hymnarium-tests/
 !adventist-hymnarium-uitests/

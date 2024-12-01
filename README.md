@@ -57,6 +57,24 @@ This is an iOS application built using Xcode. Make sure you have:
 - All required data files in place
 - Media files available if testing audio or sheet music functionality
 
+## License
+
+This project uses a dual licensing approach:
+
+### Application Source Code
+The application source code is licensed under the GNU General Public License v3 (GPLv3). 
+See the [LICENSE](LICENSE) file for details.
+
+### Hymnal Content
+The hymns, lyrics, music, and sheet music content are copyrighted by the General Conference 
+Corporation of Seventh-day Adventists®. All rights reserved. These materials are not covered 
+by the GPL license and require proper authorization for use.
+
 ## Contact
 
 For access to data files, media resources, or scripts, please contact the project maintainers.
+
+For permissions regarding hymnal content usage, contact:
+General Conference Corporation of Seventh-day Adventists
+12501 Old Columbia Pike
+Silver Spring, Maryland 20904
