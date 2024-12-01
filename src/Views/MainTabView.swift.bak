@@ -1,0 +1,142 @@
+import SwiftUI
+import UIKit
+
+struct MainTabView: View {
+    @StateObject private var hymnalService = HymnalService.shared
+    @State private var selectedTab = 0
+    @Binding var deepLinkHymnNumber: Int?
+    
+    var body: some View {
+        TabView(selection: $selectedTab) {
+            NavigationStack {
+                HymnListView(deepLinkHymnNumber: $deepLinkHymnNumber)
+            }
+            .tabItem {
+                Label("Hymns", systemImage: "music.note.list")
+            }
+            .tag(0)
+            
+            NavigationStack {
+                ThematicListView()
+            }
+            .tabItem {
+                Label("Categories", systemImage: "list.bullet")
+            }
+            .tag(1)
+            
+            NavigationStack {
+                FavoritesView()
+            }
+            .tabItem {
+                Label("Favorites", systemImage: "heart")
+            }
+            .tag(2)
+            
+            NavigationStack {
+                SettingsView()
+            }
+            .tabItem {
+                Label("Settings", systemImage: "gear")
+            }
+            .tag(3)
+        }
+    }
+}
+
+struct SettingsView: View {
+    @AppStorage("fontSize") private var fontSize: Double = 16
+    @AppStorage("showVerseNumbers") private var showVerseNumbers = true
+    @StateObject private var themeManager = ThemeManager.shared
+    @State private var showingHelp = false
+    
+    var body: some View {
+        List {
+            Section(header: Text("Display")) {
+                Toggle("Show Verse Numbers", isOn: $showVerseNumbers)
+                Toggle("Dark Mode", isOn: $themeManager.isDarkMode)
+                
+                VStack(alignment: .leading) {
+                    Text("Font Size: \(Int(fontSize))")
+                    Slider(value: $fontSize, in: 12...24, step: 1)
+                }
+            }
+            
+            Section(header: Text("About")) {
+                Button("Help") {
+                    showingHelp = true
+                }
+                
+                HStack {
+                    Text("Version")
+                    Spacer()
+                    Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
+                        .foregroundColor(.secondary)
+                }
+            }
+        }
+        .navigationTitle("Settings")
+        .sheet(isPresented: $showingHelp) {
+            NavigationView {
+                HelpView()
+                    .navigationTitle("Help")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button("Done") {
+                                showingHelp = false
+                            }
+                        }
+                    }
+            }
+        }
+    }
+}
+
+struct HelpView: View {
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                Text("How to Use")
+                    .font(.title)
+                    .padding(.bottom)
+                
+                VStack(alignment: .leading, spacing: 15) {
+                    helpItem(
+                        title: "Finding Hymns",
+                        description: "Browse the complete list of hymns, or use the search bar to find hymns by number or title."
+                    )
+                    
+                    helpItem(
+                        title: "Categories",
+                        description: "Browse hymns by theme or category for easy reference."
+                    )
+                    
+                    helpItem(
+                        title: "Favorites",
+                        description: "Tap the heart icon while viewing a hymn to add it to your favorites for quick access."
+                    )
+                    
+                    helpItem(
+                        title: "Settings",
+                        description: "Customize font size, verse numbers, and theme to your preference."
+                    )
+                }
+            }
+            .padding()
+        }
+    }
+    
+    private func helpItem(title: String, description: String) -> some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text(title)
+                .font(.headline)
+            Text(description)
+                .font(.body)
+                .foregroundColor(.secondary)
+        }
+    }
+}
+
+#Preview {
+    MainTabView(deepLinkHymnNumber: .constant(nil))
+}

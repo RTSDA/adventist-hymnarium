@@ -1,0 +1,19 @@
+{
+    "hymns": [
+        {"number": "1", "title": "Before Jehovah's Awful Throne"},
+        {"number": "2", "title": "All People That on Earth Do Dwell"},
+        {"number": "3", "title": "From All That Dwell Below the Skies"},
+        {"number": "4", "title": "Praise Ye the Lord"},
+        {"number": "5", "title": "All Glory, Laud, and Honor"},
+        {"number": "14", "title": "Praise Ye the Lord", "tune": "Rimington. L.M.", "composer": "Isaac Watts"},
+        {"number": "94", "title": "Jesus Christ", "composers": ["Stopford Brooke", "George W. Chadwick"]},
+        {"number": "99", "title": "Sufferings and Death", "composers": ["Mrs. Frank A. Breck", "Grant Colfax Tullar"]},
+        {"number": "119", "title": "His Love and Sympathy", "composer": "Charles Wesley"},
+        {"number": "167", "title": "The Holy Spirit", "composers": ["Ellwood H. Stokes", "Jno. R. Sweney"]},
+        {"number": "245", "title": "Joy or Peace", "composers": ["George T. Caldbeck", "Edward H. Bickersteth"]},
+        {"number": "441", "title": "The Church and Doctrines", "composer": "Isaac Watts", "tune": "Truro. L.M."},
+        {"number": "502", "title": "Mourn for the Thousands Slain", "tune": "Boylston. S.M."},
+        {"number": "516", "title": "Sweet the Time", "tune": "Innocents. 7.7.7.7."},
+        {"number": "688", "title": "Hear Our Prayer, O Lord", "composer": "George Whelpton", "section": "Sentences and Responses"}
+    ]
+}
