@@ -4,50 +4,59 @@ An iOS application for accessing Seventh-day Adventist hymns and sheet music.
 
 ## Project Structure
 
+This repository contains only the essential project files:
+
 - `src/` - Main iOS application source code
-- `scripts/` - Utility scripts for data processing and maintenance
-- `data/` - Hymnal data files in JSON format
-- `media/` - Media assets (not tracked in git)
-  - `audio/` - Hymn audio files
-  - `sheet-music/` - Sheet music files
-    - `1941/` - 1941 hymnal sheet music
-    - `1985/` - 1985 hymnal sheet music
 - `adventist-hymnarium-tests/` - Unit tests
 - `adventist-hymnarium-uitests/` - UI tests
 
-## Development
+## Required Resources (Not in Repository)
 
-This is an iOS application built using Xcode. To get started:
+The application requires additional resources that are not tracked in the repository. These must be obtained separately:
 
-1. Open `adventist-hymnarium.xcodeproj` in Xcode
-2. Build and run the project
+### Data Files
+Place these JSON files in `src/Resources/Assets/`:
+- `new-hymnal-en.json` - Data for the 1985 hymnal
+- `new-hymnal-thematic-list-en.json` - Thematic index for 1985 hymnal
+- `old-hymnal-en.json` - Data for the 1941 hymnal
+- `old-hymnal-thematic-list-en.json` - Thematic index for 1941 hymnal
+- `responsive_readings.json` - Responsive readings
 
 ### Media Files
-
-The application requires media files (audio and sheet music) that are not tracked in git due to their size. These files should be placed in the `media/` directory with the following structure:
-
+Create a `media` directory with the following structure:
 ```
 media/
 ├── audio/
-│   └── 1985/          # Audio files for 1985 hymnal
+│   └── 1985/          # Audio files for 1985 hymnal (.mp3)
 └── sheet-music/
-    ├── 1941/          # Sheet music from 1941 hymnal
-    └── 1985/          # Sheet music from 1985 hymnal
+    ├── 1941/          # Sheet music from 1941 hymnal (.pdf)
+    └── 1985/          # Sheet music from 1985 hymnal (.pdf)
 ```
 
-Contact the project maintainers to obtain the necessary media files.
-
-## Scripts
-
-The `scripts/` directory contains various utility scripts for:
+### Utility Scripts
+The `scripts` directory (available separately) contains utilities for:
 - Downloading and processing hymn data
 - Managing sheet music files
 - Fixing file names and permissions
-- Analyzing hymnal data
 
-## Data
+## Getting Started
 
-The `data/` directory contains:
-- `1941_hymnal.json` - Data for the 1941 hymnal
-- `hymn_sheet_data.json` - Sheet music metadata
-- `responsive_readings.json` - Responsive readings
+1. Clone this repository
+2. Contact the project maintainers to obtain:
+   - Required JSON data files
+   - Media files (audio and sheet music)
+   - Utility scripts (if needed for development)
+3. Place the files in their respective directories as described above
+4. Open `adventist-hymnarium.xcodeproj` in Xcode
+5. Build and run the project
+
+## Development
+
+This is an iOS application built using Xcode. Make sure you have:
+- Xcode installed
+- All required data files in place
+- Media files available if testing audio or sheet music functionality
+
+## Contact
+
+For access to data files, media resources, or scripts, please contact the project maintainers.
