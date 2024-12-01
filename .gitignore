@@ -22,6 +22,16 @@ wheels/
 .installed.cfg
 *.egg
 
+# Xamarin
+xamarin-app/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
 # Xcode
 .DS_Store
 */build/*
@@ -42,3 +52,22 @@ DerivedData
 *.xccheckout
 *.xcworkspace
 !default.xcworkspace
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Large media files
+*.mp3
+*.wav
+*.m4a
+*.ogg
+*.pdf
+*.png
+1941-sheet-music/
+src/Resources/Assets/Audio/
+src/Resources/Assets/MusicSheets/
+
+# Keep specific media files if needed
+# !src/Resources/Assets/Icons/*.png
