@@ -179,20 +179,38 @@ final class AudioService: NSObject, ObservableObject {
             // Observe player item status
             var observation: NSKeyValueObservation?
             observation = playerItem.observe(\.status) { [weak self] item, _ in
-                if item.status == .readyToPlay {
-                    self?.duration = item.duration.seconds
-                    observation?.invalidate()
+                Task { @MainActor in
+                    if item.status == .readyToPlay {
+                        self?.duration = item.duration.seconds
+                        observation?.invalidate()
+                    }
                 }
             }
             
             player = AVPlayer(playerItem: playerItem)
-            player?.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC)), queue: .main) { [weak self] time in
-                self?.currentTime = time.seconds
-                self?.updateNowPlaying()
+            
+            // Add completion observer
+            NotificationCenter.default.addObserver(
+                forName: .AVPlayerItemDidPlayToEndTime,
+                object: playerItem,
+                queue: .main
+            ) { [weak self] _ in
+                Task { @MainActor in
+                    self?.isPlaying = false
+                    // Clean up temporary file
+                    if let urlAsset = playerItem.asset as? AVURLAsset {
+                        try? FileManager.default.removeItem(at: urlAsset.url)
+                    }
+                    self?.updateNowPlaying()
+                }
             }
             
-            // Clean up temporary file
-            try? FileManager.default.removeItem(at: tempURL)
+            player?.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC)), queue: .main) { [weak self] time in
+                Task { @MainActor in
+                    self?.currentTime = time.seconds
+                    self?.updateNowPlaying()
+                }
+            }
             
             currentHymnNumber = hymnNumber
             audioAvailable = true
@@ -259,24 +277,6 @@ final class AudioService: NSObject, ObservableObject {
         guard let hymnNumber = notification.userInfo?["hymnNumber"] as? Int else { return }
         Task {
             try? await loadAndPlay(hymnNumber: hymnNumber)
-        }
-    }
-}
-
-// MARK: - AVAudioPlayerDelegate
-
-extension AudioService: AVAudioPlayerDelegate {
-    nonisolated func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        Task { @MainActor in
-            isPlaying = false
-            updateNowPlaying()
-        }
-    }
-    
-    nonisolated func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
-        Task { @MainActor in
-            self.error = error
-            isPlaying = false
         }
     }
 }
