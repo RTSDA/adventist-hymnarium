@@ -12,17 +12,22 @@ struct ThematicIndexContent: View {
                         NavigationLink {
                             ThematicHymnListView(title: list.thematic, hymns: hymns)
                         } label: {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(list.thematic)
-                                    .scaledFont(.headline)
-                                    .foregroundColor(.primary)
-                                Text("\(hymns.count) hymns")
-                                    .scaledFont(.subheadline)
-                                    .foregroundColor(.secondary)
+                            HStack {
+                                Text("#\(list.thematic)")
+                                    .font(AppTheme.standardFont)
+                                    .foregroundColor(AppTheme.accentColor)
+                                    .frame(width: 70, alignment: .leading)
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(list.thematic)
+                                        .font(AppTheme.standardFont)
+                                        .foregroundColor(AppTheme.textColor)
+                                    Text("\(hymns.count) hymns")
+                                        .font(AppTheme.standardFont)
+                                        .foregroundColor(AppTheme.textColor)
+                                }
                             }
+                            .padding(AppTheme.padding)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding()
-                            .padding(.vertical, 12)
                         }
                         Divider()
                             .padding(.leading)
@@ -30,17 +35,22 @@ struct ThematicIndexContent: View {
                         NavigationLink {
                             ThematicSubGroupView(thematicList: list)
                         } label: {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(list.thematic)
-                                    .scaledFont(.headline)
-                                    .foregroundColor(.primary)
-                                Text("\(list.ambits.count) categories")
-                                    .scaledFont(.subheadline)
-                                    .foregroundColor(.secondary)
+                            HStack {
+                                Text("#\(list.thematic)")
+                                    .font(AppTheme.standardFont)
+                                    .foregroundColor(AppTheme.accentColor)
+                                    .frame(width: 70, alignment: .leading)
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(list.thematic)
+                                        .font(AppTheme.standardFont)
+                                        .foregroundColor(AppTheme.textColor)
+                                    Text("\(list.ambits.count) categories")
+                                        .font(AppTheme.standardFont)
+                                        .foregroundColor(AppTheme.textColor)
+                                }
                             }
+                            .padding(AppTheme.padding)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding()
-                            .padding(.vertical, 12)
                         }
                         Divider()
                             .padding(.leading)
@@ -48,7 +58,7 @@ struct ThematicIndexContent: View {
                 }
             }
         }
-        .background(Color(.systemGroupedBackground))
+        .background(AppTheme.backgroundColor)
     }
 }
 
@@ -63,13 +73,15 @@ struct ThematicHymnListView: View {
                     NavigationLink(destination: HymnDetailView(hymn: hymn)) {
                         HStack {
                             Text("#\(hymn.number)")
-                                .foregroundColor(.secondary)
+                                .font(AppTheme.standardFont)
+                                .foregroundColor(AppTheme.accentColor)
                                 .frame(width: 50, alignment: .leading)
                             Text(hymn.title)
-                                .scaledFont(.headline)
+                                .font(AppTheme.standardFont)
+                                .foregroundColor(AppTheme.textColor)
                             Spacer()
                         }
-                        .padding()
+                        .padding(AppTheme.padding)
                         .padding(.vertical, 12)
                     }
                     Divider()
@@ -77,7 +89,7 @@ struct ThematicHymnListView: View {
                 }
             }
         }
-        .background(Color(.systemGroupedBackground))
+        .background(AppTheme.backgroundColor)
         .navigationTitle(title)
     }
 }

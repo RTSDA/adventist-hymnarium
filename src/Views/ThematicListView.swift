@@ -1,33 +1,34 @@
 import SwiftUI
 
 struct ThematicListView: View {
-    @State private var selectedTab = 0
+    let thematicList: ThematicList
+    @StateObject private var hymnalService = HymnalService.shared
     
     var body: some View {
-        NavigationView {
-            VStack(spacing: 0) {
-                Picker("Index Type", selection: $selectedTab) {
-                    Text("Categories").tag(0)
-                    Text("Alphabetical").tag(1)
-                    Text("Numerical").tag(2)
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 0) {
+                ForEach(thematicList.ambits) { ambit in
+                    NavigationLink(destination: ThematicHymnsListView(ambit: ambit)) {
+                        HStack {
+                            Text("#\(ambit.start)-\(ambit.end)")
+                                .font(AppTheme.standardFont)
+                                .foregroundColor(AppTheme.accentColor)
+                                .frame(width: 50, alignment: .leading)
+                            
+                            Text(ambit.ambit)
+                                .font(AppTheme.standardFont)
+                                .foregroundColor(AppTheme.textColor)
+                                .lineLimit(2)
+                        }
+                        .padding(AppTheme.padding)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    Divider()
                 }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding()
-                
-                TabView(selection: $selectedTab) {
-                    ThematicIndexContent()
-                        .tag(0)
-                    
-                    AlphabeticalIndexView()
-                        .tag(1)
-                    
-                    NumericalIndexView()
-                        .tag(2)
-                }
-                .tabViewStyle(.page(indexDisplayMode: .never))
             }
-            .navigationTitle("Index")
         }
+        .background(AppTheme.backgroundColor)
+        .navigationTitle(thematicList.thematic)
     }
 }
 
@@ -88,5 +89,14 @@ struct ThematicHymnsListView: View {
 }
 
 #Preview {
-    ThematicListView()
+    NavigationView {
+        ThematicListView(thematicList: ThematicList(
+            thematic: "Categories",
+            ambits: [
+                ThematicAmbit(ambit: "Worship", start: 1, end: 20, backgroundImage: nil),
+                ThematicAmbit(ambit: "God's Love", start: 21, end: 40, backgroundImage: nil),
+                ThematicAmbit(ambit: "Praise", start: 41, end: 60, backgroundImage: nil)
+            ]
+        ))
+    }
 }

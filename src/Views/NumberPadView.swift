@@ -13,55 +13,62 @@ struct NumberPadView: View {
     
     // Get dynamic sizes based on screen
     private var buttonSize: CGFloat {
-        horizontalSizeClass == .regular ? 100 : 80
+        horizontalSizeClass == .regular ? 80 : 80
     }
     
     private var spacing: CGFloat {
-        horizontalSizeClass == .regular ? 25 : 20
+        horizontalSizeClass == .regular ? 20 : 20
     }
     
     private var fontSize: CGFloat {
-        horizontalSizeClass == .regular ? 40 : 32
+        horizontalSizeClass == .regular ? 32 : 32
     }
     
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: spacing) {
-                Text(enteredNumber.isEmpty ? "Enter Number" : enteredNumber)
-                    .scaledFontSize(fontSize)
-                    .fontWeight(.bold)
-                    .frame(height: 60)
-                    .minimumScaleFactor(0.5)
-                    .lineLimit(1)
-                    .padding(.top)
-                
-                // Number pad grid
+            let isIPad = horizontalSizeClass == .regular
+            let maxWidth: CGFloat = isIPad ? 400 : geometry.size.width
+            
+            ScrollView {
                 VStack(spacing: spacing) {
-                    ForEach(0..<3) { row in
-                        HStack(spacing: spacing) {
-                            ForEach(1...3, id: \.self) { col in
-                                let number = String(row * 3 + col)
-                                numberButton(number)
+                    Text(enteredNumber.isEmpty ? "Enter Number" : enteredNumber)
+                        .scaledFontSize(fontSize)
+                        .fontWeight(.bold)
+                        .frame(height: 60)
+                        .minimumScaleFactor(0.5)
+                        .lineLimit(1)
+                        .padding(.top)
+                    
+                    // Number pad grid
+                    VStack(spacing: spacing) {
+                        ForEach(0..<3) { row in
+                            HStack(spacing: spacing) {
+                                ForEach(1...3, id: \.self) { col in
+                                    let number = String(row * 3 + col)
+                                    numberButton(number)
+                                }
                             }
                         }
+                        
+                        // Bottom row
+                        HStack(spacing: spacing) {
+                            numberButton("")
+                            numberButton("0")
+                            deleteButton
+                        }
                     }
+                    .frame(maxWidth: maxWidth)
                     
-                    // Bottom row
-                    HStack(spacing: spacing) {
-                        numberButton("")
-                        numberButton("0")
-                        deleteButton
-                    }
+                    goButton
+                        .padding(.vertical)
+                    
+                    // Add spacing at the bottom to account for mini player
+                    Color.clear.frame(height: 20)
                 }
+                .padding()
                 .frame(maxWidth: .infinity)
-                
-                goButton
-                    .padding(.vertical)
-                
-                // Add spacing at the bottom to account for mini player
-                Color.clear.frame(height: 20)
+                .frame(minHeight: geometry.size.height)
             }
-            .padding()
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -145,7 +152,7 @@ struct NumberPadView: View {
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
-                .frame(maxWidth: horizontalSizeClass == .regular ? 300 : 200)
+                .frame(maxWidth: horizontalSizeClass == .regular ? 200 : 200)
                 .frame(height: 60)
                 .contentShape(Rectangle())
         }

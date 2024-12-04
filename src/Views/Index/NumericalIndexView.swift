@@ -8,23 +8,23 @@ struct NumericalIndexView: View {
             LazyVStack(alignment: .leading, spacing: 0) {
                 ForEach(hymnalService.hymns) { hymn in
                     NavigationLink(destination: HymnDetailView(hymn: hymn)) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("#\(hymn.number) \(hymn.title)")
-                                .font(.headline)
-                            if let firstVerse = hymn.verses.first {
-                                Text(firstVerse)
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                    .lineLimit(2)
-                            }
+                        HStack {
+                            Text("#\(hymn.number)")
+                                .font(AppTheme.standardFont)
+                                .foregroundColor(AppTheme.accentColor)
+                            
+                            Text(hymn.title)
+                                .font(AppTheme.standardFont)
+                                .foregroundColor(AppTheme.textColor)
                         }
-                        .padding()
+                        .padding(AppTheme.padding)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     Divider()
                 }
             }
         }
-        .background(Color(.systemGroupedBackground))
+        .background(AppTheme.backgroundColor)
     }
 }
 

@@ -15,28 +15,34 @@ struct IndexView: View {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-            .padding(.horizontal)
-            .padding(.vertical, 8)
+            .padding(.horizontal, AppTheme.padding)
+            .padding(.vertical, AppTheme.padding)
+            .background(Color(uiColor: .systemBackground))
             
             TabView(selection: $selectedTab) {
                 AlphabeticalIndexView()
                     .tag(0)
+                    .background(Color(uiColor: .systemBackground))
                 
                 NumericalIndexView()
                     .tag(1)
+                    .background(Color(uiColor: .systemBackground))
                 
                 ThematicIndexContent()
                     .tag(2)
+                    .background(Color(uiColor: .systemBackground))
                 
                 if hymnalService.currentLanguage == .english1985 {
                     ResponsiveReadingsListView()
                         .tag(3)
+                        .background(Color(uiColor: .systemBackground))
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
         }
         .navigationTitle("Adventist Hymnarium")
         .navigationBarTitleDisplayMode(.large)
+        .background(Color(uiColor: .systemBackground))
     }
 }
 
