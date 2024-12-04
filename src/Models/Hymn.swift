@@ -93,7 +93,7 @@ struct Hymn: Codable, Identifiable {
             
             if is1941Hymnal {
                 // For 1941 hymnal, use the index + 1 as verse number
-                return Verse(number: index + 1, text: lines, isChorus: false)
+                return Verse(number: index + 1, text: lines, isChorus: false, label: "Verse \(index + 1)")
             } else {
                 // Parse verse number and text for 1985 hymnal
                 let allLines = lines.components(separatedBy: "\n")
@@ -106,11 +106,11 @@ struct Hymn: Codable, Identifiable {
                    let number = Int(firstLine[range.lowerBound..<range.upperBound].trimmingCharacters(in: CharacterSet(charactersIn: ". "))) {
                     // Join all lines except the first one (which contains the verse number)
                     let verseText = allLines.dropFirst().joined(separator: "\n").trimmingCharacters(in: .whitespacesAndNewlines)
-                    return Verse(number: number, text: verseText, isChorus: false)
+                    return Verse(number: number, text: verseText, isChorus: false, label: "Verse \(number)")
                 }
                 
                 // Special case: If no verse number is found, treat the entire text as a verse
-                return Verse(number: 1, text: lines, isChorus: false)
+                return Verse(number: 1, text: lines, isChorus: false, label: "Verse 1")
             }
         }
         

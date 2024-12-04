@@ -30,6 +30,17 @@ struct ResponsiveReading: Codable, Identifiable {
                   .trimmingCharacters(in: .whitespacesAndNewlines)
         }
         
+        var role: String? {
+            switch type {
+            case .all:
+                return "All"
+            case .light:
+                return "Leader"
+            case .dark:
+                return "Congregation"
+            }
+        }
+        
         // Implement Hashable
         func hash(into hasher: inout Hasher) {
             hasher.combine(order)
@@ -44,28 +55,6 @@ struct ResponsiveReading: Codable, Identifiable {
         case light = "LIGHT"
         case dark = "DARK"
         case all = "ALL"
-        
-        var textColor: Color {
-            switch self {
-            case .light:
-                return .primary
-            case .dark:
-                return .secondary
-            case .all:
-                return .accentColor
-            }
-        }
-        
-        var fontWeight: Font.Weight {
-            switch self {
-            case .light:
-                return .regular
-            case .dark:
-                return .regular
-            case .all:
-                return .bold
-            }
-        }
     }
 }
 

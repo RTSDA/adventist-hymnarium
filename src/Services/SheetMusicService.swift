@@ -1,3 +1,10 @@
+//
+//  SheetMusicService.swift
+//  SDA HymnalApp
+//
+//  Created by Benjamin Slingo on 12/3/24.
+//
+
 import Foundation
 import UIKit
 import Combine
@@ -11,7 +18,7 @@ final class ImageContainer {
     }
 }
 
-class SheetMusicService: ObservableObject {
+final class SheetMusicService: ObservableObject {
     static let shared = SheetMusicService()
     
     @Published private(set) var currentSheetMusic: [UIImage]?
@@ -19,14 +26,14 @@ class SheetMusicService: ObservableObject {
     @Published private(set) var isLoading = false
     @Published private(set) var error: Error?
     
-    // Cache for loaded images
-    private var imageCache = NSCache<NSString, ImageContainer>()
-    private var loadingTasks: [Int: Task<Void, Never>] = [:]
+    private let cacheService = CacheService.shared
+    private let cloudStorage = CloudStorageService.shared
+    private let cacheDirectory = "sheet-music"
+    private let maxCacheSize: Int64 = 200 * 1024 * 1024  // 200MB limit for sheet music
     
     private init() {
-        // Configure cache limits
-        imageCache.countLimit = 10 // Keep at most 10 hymns in memory
-        imageCache.totalCostLimit = 50 * 1024 * 1024 // 50MB limit
+        // Trim cache if needed when app starts
+        cacheService.trimCacheIfNeeded(inDirectory: cacheDirectory, maxSize: maxCacheSize)
     }
     
     @MainActor
@@ -38,16 +45,6 @@ class SheetMusicService: ObservableObject {
             return existingImages
         }
         
-        // Check the cache first
-        let cacheKey = NSString(string: String(hymnNumber))
-        if let cachedContainer = imageCache.object(forKey: cacheKey) {
-            currentSheetMusic = cachedContainer.images
-            currentHymnKey = hymnNumber
-            isLoading = false
-            error = nil
-            return cachedContainer.images
-        }
-        
         isLoading = true
         error = nil
         
@@ -55,7 +52,6 @@ class SheetMusicService: ObservableObject {
             let images = try await loadImagesAsync(for: hymnNumber)
             currentSheetMusic = images
             currentHymnKey = hymnNumber
-            imageCache.setObject(ImageContainer(images: images), forKey: cacheKey)
             isLoading = false
             return images
         } catch {
@@ -66,103 +62,73 @@ class SheetMusicService: ObservableObject {
     }
     
     private func loadImagesAsync(for hymnNumber: Int) async throws -> [UIImage] {
-        // Check if we're using the 1941 hymnal
-        let selectedHymnal = UserDefaults.standard.string(forKey: "selectedHymnal") ?? HymnalType.current.rawValue
-        let hymnalType = HymnalType(rawValue: selectedHymnal) ?? .current
-        
-        if hymnalType == .old1941 {
-            return try await load1941Images(for: hymnNumber)
-        } else {
-            return try await loadCurrentImages(for: hymnNumber)
-        }
-    }
-    
-    private func load1941Images(for hymnNumber: Int) async throws -> [UIImage] {
-        let numberString = String(format: "%03d", hymnNumber)
-        let hymnsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("1941_sheet_music")
-            .appendingPathComponent(numberString)
-        
-        var images: [UIImage] = []
-        
-        // Check if directory exists
-        var isDirectory: ObjCBool = false
-        guard FileManager.default.fileExists(atPath: hymnsDirectory.path, isDirectory: &isDirectory),
-              isDirectory.boolValue else {
-            throw NSError(domain: "SheetMusicService", code: -1,
-                        userInfo: [NSLocalizedDescriptionKey: "Sheet music not found for 1941 hymn \(hymnNumber)"])
-        }
-        
-        // Load all sheet music files in the directory
-        let fileURLs = try FileManager.default.contentsOfDirectory(at: hymnsDirectory,
-                                                                 includingPropertiesForKeys: nil)
-        let imageURLs = fileURLs.filter { url in
-            let ext = url.pathExtension.lowercased()
-            return ext == "pdf" || ext == "png" || ext == "jpg" || ext == "jpeg"
-        }.sorted { $0.lastPathComponent < $1.lastPathComponent }
-        
-        for url in imageURLs {
-            if url.pathExtension.lowercased() == "pdf" {
-                // For PDFs, convert to images
-                if let pdfDoc = CGPDFDocument(url as CFURL),
-                   let pdfPage = pdfDoc.page(at: 1) {
-                    let pageRect = pdfPage.getBoxRect(.mediaBox)
-                    let renderer = UIGraphicsImageRenderer(size: pageRect.size)
-                    let image = renderer.image { ctx in
-                        UIColor.white.set()
-                        ctx.fill(pageRect)
-                        ctx.cgContext.translateBy(x: 0, y: pageRect.size.height)
-                        ctx.cgContext.scaleBy(x: 1.0, y: -1.0)
-                        ctx.cgContext.drawPDFPage(pdfPage)
-                    }
-                    images.append(image)
-                }
-            } else if let image = UIImage(contentsOfFile: url.path) {
-                images.append(image)
-            }
-        }
-        
-        guard !images.isEmpty else {
-            throw NSError(domain: "SheetMusicService", code: -1,
-                        userInfo: [NSLocalizedDescriptionKey: "No valid sheet music found for 1941 hymn \(hymnNumber)"])
-        }
-        
-        return images
-    }
-    
-    private func loadCurrentImages(for hymnNumber: Int) async throws -> [UIImage] {
         // Format the hymn number with leading zeros (e.g. 1 -> "001")
         let numberString = String(format: "%03d", hymnNumber)
-        let baseFilename = "PianoSheet_NewHymnal_en_\(numberString)"
+        let baseFilename = "sheet-music/1985/PianoSheet_NewHymnal_en_\(numberString)"
         var images: [UIImage] = []
+        print("Starting to load images for hymn \(hymnNumber)")
         
-        // Try different possible locations for the sheet music
-        let possibleDirectories = [
-            "Resources/Assets/MusicSheets",
-            "MusicSheets",
-            "Assets/MusicSheets",
-            ""
-        ]
-        
-        // Load the main image
-        for directory in possibleDirectories {
-            if let mainImage = loadImage(withName: baseFilename, inDirectory: directory) {
-                images.append(mainImage)
-                break
-            }
-        }
-        
-        // Try loading additional pages (up to 5 pages)
-        if !images.isEmpty {
-            let directory = possibleDirectories.first { dir in
-                loadImage(withName: baseFilename, inDirectory: dir) != nil
-            } ?? ""
+        // Try to load the main sheet music image
+        do {
+            let imageData: Data
+            let cacheKey = "\(numberString).png"
             
-            for i in 1...5 {
-                if let additionalImage = loadImage(withName: "\(baseFilename)_\(i)", inDirectory: directory) {
-                    images.append(additionalImage)
-                }
+            // Try to get from cache first
+            if let cachedData = try? cacheService.retrieve(forKey: cacheKey, fromDirectory: cacheDirectory) {
+                imageData = cachedData
+                print("Retrieved main page from cache, size: \(imageData.count) bytes")
+            } else {
+                // Download from R2 if not in cache
+                imageData = try await cloudStorage.downloadAsset(path: "\(baseFilename).png")
+                print("Downloaded main page, size: \(imageData.count) bytes")
+                // Store in cache
+                try? cacheService.store(imageData, forKey: cacheKey, inDirectory: cacheDirectory)
             }
+            
+            if let image = UIImage(data: imageData) {
+                print("Successfully created UIImage for main page, dimensions: \(image.size)")
+                images.append(image)
+            }
+            
+            // Try loading additional pages
+            var page = 1  // Start from page 1 since some hymns use _1, _2, etc.
+            var consecutiveFailures = 0
+            while consecutiveFailures < 2 {  // Allow one missing page before stopping
+                do {
+                    let pageCacheKey = "\(numberString)_\(page).png"
+                    let pageData: Data
+                    
+                    print("Attempting to load page \(page)")
+                    // Try cache first
+                    if let cachedData = try? cacheService.retrieve(forKey: pageCacheKey, fromDirectory: cacheDirectory) {
+                        pageData = cachedData
+                        print("Retrieved page \(page) from cache, size: \(pageData.count) bytes")
+                    } else {
+                        // Download if not in cache
+                        pageData = try await cloudStorage.downloadAsset(path: "\(baseFilename)_\(page).png")
+                        print("Downloaded page \(page), size: \(pageData.count) bytes")
+                        // Store in cache
+                        try? cacheService.store(pageData, forKey: pageCacheKey, inDirectory: cacheDirectory)
+                    }
+                    
+                    if let pageImage = UIImage(data: pageData) {
+                        print("Successfully created UIImage for page \(page), dimensions: \(pageImage.size)")
+                        images.append(pageImage)
+                        consecutiveFailures = 0  // Reset counter on success
+                    } else {
+                        print("Failed to create UIImage from data for page \(page)")
+                        consecutiveFailures += 1
+                    }
+                } catch {
+                    print("Error loading page \(page): \(error)")
+                    consecutiveFailures += 1
+                }
+                page += 1
+            }
+            
+            print("Finished loading images. Total pages loaded: \(images.count)")
+        } catch {
+            print("Error loading sheet music: \(error)")
         }
         
         guard !images.isEmpty else {
@@ -173,48 +139,13 @@ class SheetMusicService: ObservableObject {
         return images
     }
     
-    private func loadImage(withName name: String, inDirectory directory: String) -> UIImage? {
-        // First try loading from the specified directory
-        if !directory.isEmpty,
-           let resourcePath = Bundle.main.path(forResource: name, ofType: "png", inDirectory: directory),
-           let image = UIImage(contentsOfFile: resourcePath) {
-            return image
-        }
-        
-        // If that fails, try loading directly by name
-        if let resourcePath = Bundle.main.path(forResource: name, ofType: "png"),
-           let image = UIImage(contentsOfFile: resourcePath) {
-            return image
-        }
-        
-        return nil
-    }
-    
     func sheetMusicExists(for hymnNumber: Int) -> Bool {
-        // Check if we're using the 1941 hymnal
-        let selectedHymnal = UserDefaults.standard.string(forKey: "selectedHymnal") ?? HymnalType.current.rawValue
-        let hymnalType = HymnalType(rawValue: selectedHymnal) ?? .current
-        
-        // Hide sheet music completely for 1941 hymnal
-        if hymnalType == .old1941 {
-            return false
-        }
-        
-        // Check for current hymnal sheet music
+        // Format the hymn number with leading zeros
         let numberString = String(format: "%03d", hymnNumber)
-        let filename = "PianoSheet_NewHymnal_en_\(numberString)"
+        let path = "sheet-music/1985/PianoSheet_NewHymnal_en_\(numberString).png"
         
-        // Try different possible locations
-        let possibleDirectories = [
-            "Resources/Assets/MusicSheets",
-            "MusicSheets",
-            "Assets/MusicSheets",
-            ""
-        ]
-        
-        return possibleDirectories.contains { directory in
-            Bundle.main.path(forResource: filename, ofType: "png", inDirectory: directory) != nil ||
-            Bundle.main.path(forResource: "\(filename)_1", ofType: "png", inDirectory: directory) != nil
-        }
+        // We'll consider it exists if we can construct a valid URL
+        // The actual existence will be checked when downloading
+        return true
     }
 }
