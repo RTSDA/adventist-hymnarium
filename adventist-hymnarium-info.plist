@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>Adventist&#x2007;Hymnarium</string>
+	<string>Adventist Hymnarium</string>
 	<key>CFBundleName</key>
-	<string>Adventist&#x2007;Hymnarium</string>
+	<string>Adventist Hymnarium</string>
 	<key>CFBundleDisplayName~ipad</key>
-	<string>Adventist&#x2007;Hymnarium</string>
+	<string>Adventist Hymnarium</string>
 	<key>CFBundleDisplayName~iphone</key>
-	<string>Adventist&#x2007;Hymnarium</string>
+	<string>Adventist Hymnarium</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>CFBundleExecutable</key>

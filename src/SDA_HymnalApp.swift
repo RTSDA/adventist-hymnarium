@@ -1,14 +1,25 @@
 //
-//  AdventistHymnariumApp.swift
-//  Adventist Hymnarium
+//  SDA_HymnalApp.swift
+//  SDA HymnalApp
 //
 //  Created by Benjamin Slingo on 11/28/24.
 //
 
 import SwiftUI
+import FirebaseCore
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication,
+                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        return true
+    }
+}
 
 @main
-struct AdventistHymnariumApp: App {
+struct SDA_HymnalApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
     init() {
         // Set the display name programmatically
         if let displayName = Bundle.main.displayName {

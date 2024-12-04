@@ -2,79 +2,68 @@ import SwiftUI
 
 struct AudioSettingsView: View {
     @StateObject private var audioService = AudioService.shared
-    @State private var isDownloading = false
     @State private var showingDownloadAlert = false
-    @State private var showingClearAlert = false
     @State private var downloadStart: Int = 1
     @State private var downloadEnd: Int = 2
+    @State private var isDownloading = false
     
     var body: some View {
         List {
             Section {
                 HStack {
-                    Text("Downloaded Audio")
+                    Text("Cloud Storage")
                     Spacer()
-                    Text(formatFileSize(audioService.getDownloadedAudioSize()))
+                    Text("Using Cloudflare R2")
                         .foregroundColor(.secondary)
                 }
                 
-                if audioService.isDownloading {
+                if isDownloading {
                     VStack(alignment: .leading) {
                         Text("Downloading...")
                             .foregroundColor(.secondary)
-                        ProgressView(value: audioService.downloadProgress)
+                        ProgressView()
                             .progressViewStyle(.linear)
                     }
                 } else {
                     Button(action: { showingDownloadAlert = true }) {
-                        Label("Download Hymns", systemImage: "arrow.down.circle")
-                    }
-                    
-                    Button(action: { showingClearAlert = true }) {
-                        Label("Clear Downloads", systemImage: "trash")
-                            .foregroundColor(.red)
+                        Label("Cache Hymns", systemImage: "arrow.down.circle")
                     }
                 }
             } header: {
-                Text("Offline Access")
+                Text("Storage")
             } footer: {
-                Text("Download hymns for offline playback. Downloaded audio will be available when you don't have an internet connection.")
+                Text("Hymn audio is stored in the cloud and streamed when playing. You can cache hymns for faster playback.")
             }
         }
         .navigationTitle("Audio Settings")
-        .alert("Download Hymns", isPresented: $showingDownloadAlert) {
+        .alert("Cache Hymns", isPresented: $showingDownloadAlert) {
             TextField("Start Number", value: $downloadStart, format: .number)
             TextField("End Number", value: $downloadEnd, format: .number)
             Button("Cancel", role: .cancel) { }
             Button("Download") {
                 Task {
-                    let downloadRange = downloadStart...downloadEnd
-                    await audioService.downloadHymnsForOfflineUse(range: downloadRange)
+                    isDownloading = true
+                    for number in downloadStart...downloadEnd {
+                        do {
+                            try await audioService.loadAndPlay(hymnNumber: number)
+                            await audioService.stop()
+                        } catch {
+                            print("Failed to cache hymn \(number): \(error)")
+                        }
+                    }
+                    isDownloading = false
                 }
             }
         } message: {
-            Text("Enter the range of hymn numbers to download")
+            Text("Enter the range of hymn numbers to cache locally")
         }
-        .alert("Clear Downloads", isPresented: $showingClearAlert) {
-            Button("Cancel", role: .cancel) { }
-            Button("Clear", role: .destructive) {
-                audioService.clearDownloadedAudio()
-            }
-        } message: {
-            Text("Are you sure you want to delete all downloaded hymn audio? This cannot be undone.")
-        }
-    }
-    
-    private func formatFileSize(_ size: Int64) -> String {
-        let formatter = ByteCountFormatter()
-        formatter.allowedUnits = [.useAll]
-        formatter.countStyle = .file
-        return formatter.string(fromByteCount: size)
     }
 }
 
-#Preview {
-    NavigationView {
-        AudioSettingsView()
+struct AudioSettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            AudioSettingsView()
+        }
     }
 }

@@ -6,6 +6,69 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		EA10AF8B2CFF9F41000BA431 /* AlphabeticalIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF682CFF9F41000BA431 /* AlphabeticalIndexView.swift */; };
+		EA10AF8C2CFF9F41000BA431 /* Hymn.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF4D2CFF9F41000BA431 /* Hymn.swift */; };
+		EA10AF8D2CFF9F41000BA431 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF7E2CFF9F41000BA431 /* SearchView.swift */; };
+		EA10AF8E2CFF9F41000BA431 /* NumberPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF7B2CFF9F41000BA431 /* NumberPadView.swift */; };
+		EA10AF8F2CFF9F41000BA431 /* HymnSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF502CFF9F41000BA431 /* HymnSheet.swift */; };
+		EA10AF902CFF9F41000BA431 /* AppDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF482CFF9F41000BA431 /* AppDefaults.swift */; };
+		EA10AF912CFF9F41000BA431 /* ScreenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF602CFF9F41000BA431 /* ScreenService.swift */; };
+		EA10AF922CFF9F41000BA431 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF6F2CFF9F41000BA431 /* FavoritesView.swift */; };
+		EA10AF932CFF9F41000BA431 /* FavoriteReadingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF6E2CFF9F41000BA431 /* FavoriteReadingsView.swift */; };
+		EA10AF942CFF9F41000BA431 /* NumericalIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF692CFF9F41000BA431 /* NumericalIndexView.swift */; };
+		EA10AF952CFF9F41000BA431 /* AppIconPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF6D2CFF9F41000BA431 /* AppIconPreviewView.swift */; };
+		EA10AF962CFF9F41000BA431 /* SheetMusicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF612CFF9F41000BA431 /* SheetMusicService.swift */; };
+		EA10AF972CFF9F41000BA431 /* PDFService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF5E2CFF9F41000BA431 /* PDFService.swift */; };
+		EA10AF982CFF9F41000BA431 /* Font+Scaling.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF4B2CFF9F41000BA431 /* Font+Scaling.swift */; };
+		EA10AF992CFF9F41000BA431 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF702CFF9F41000BA431 /* HistoryView.swift */; };
+		EA10AF9A2CFF9F41000BA431 /* ResponsiveReadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF7D2CFF9F41000BA431 /* ResponsiveReadingView.swift */; };
+		EA10AF9B2CFF9F41000BA431 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF7F2CFF9F41000BA431 /* SettingsView.swift */; };
+		EA10AF9C2CFF9F41000BA431 /* SDA_HymnalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF892CFF9F41000BA431 /* SDA_HymnalApp.swift */; };
+		EA10AF9D2CFF9F41000BA431 /* Bundle+DisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF4A2CFF9F41000BA431 /* Bundle+DisplayName.swift */; };
+		EA10AF9E2CFF9F41000BA431 /* AudioSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF6B2CFF9F41000BA431 /* AudioSettingsView.swift */; };
+		EA10AF9F2CFF9F41000BA431 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF632CFF9F41000BA431 /* AppTheme.swift */; };
+		EA10AFA02CFF9F41000BA431 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF872CFF9F41000BA431 /* ContentView.swift */; };
+		EA10AFA12CFF9F41000BA431 /* HymnalLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF4E2CFF9F41000BA431 /* HymnalLanguage.swift */; };
+		EA10AFA22CFF9F41000BA431 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF772CFF9F41000BA431 /* MainTabView.swift */; };
+		EA10AFA32CFF9F41000BA431 /* HymnalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF5D2CFF9F41000BA431 /* HymnalService.swift */; };
+		EA10AFA42CFF9F41000BA431 /* HymnDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF712CFF9F41000BA431 /* HymnDetailView.swift */; };
+		EA10AFA52CFF9F41000BA431 /* ResponsiveReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF512CFF9F41000BA431 /* ResponsiveReading.swift */; };
+		EA10AFA62CFF9F41000BA431 /* LaunchIconPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF742CFF9F41000BA431 /* LaunchIconPreviewView.swift */; };
+		EA10AFA72CFF9F41000BA431 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF822CFF9F41000BA431 /* SplashScreenView.swift */; };
+		EA10AFA82CFF9F41000BA431 /* SplashScreenPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF812CFF9F41000BA431 /* SplashScreenPreviewView.swift */; };
+		EA10AFA92CFF9F41000BA431 /* ResponsiveReadingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF5F2CFF9F41000BA431 /* ResponsiveReadingService.swift */; };
+		EA10AFAA2CFF9F41000BA431 /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF752CFF9F41000BA431 /* LaunchScreenView.swift */; };
+		EA10AFAB2CFF9F41000BA431 /* PlaybackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF662CFF9F41000BA431 /* PlaybackButton.swift */; };
+		EA10AFAC2CFF9F41000BA431 /* SheetMusicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF802CFF9F41000BA431 /* SheetMusicView.swift */; };
+		EA10AFAD2CFF9F41000BA431 /* NowPlayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF7A2CFF9F41000BA431 /* NowPlayingView.swift */; };
+		EA10AFAE2CFF9F41000BA431 /* IndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF732CFF9F41000BA431 /* IndexView.swift */; };
+		EA10AFAF2CFF9F41000BA431 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF5C2CFF9F41000BA431 /* AudioService.swift */; };
+		EA10AFB02CFF9F41000BA431 /* HymnalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF4F2CFF9F41000BA431 /* HymnalType.swift */; };
+		EA10AFB12CFF9F41000BA431 /* LegalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF762CFF9F41000BA431 /* LegalView.swift */; };
+		EA10AFB22CFF9F41000BA431 /* ThematicListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF842CFF9F41000BA431 /* ThematicListView.swift */; };
+		EA10AFB32CFF9F41000BA431 /* ThematicIndexContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF832CFF9F41000BA431 /* ThematicIndexContent.swift */; };
+		EA10AFB42CFF9F41000BA431 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF642CFF9F41000BA431 /* ThemeManager.swift */; };
+		EA10AFB52CFF9F41000BA431 /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF792CFF9F41000BA431 /* MiniPlayerView.swift */; };
+		EA10AFB62CFF9F41000BA431 /* RecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF7C2CFF9F41000BA431 /* RecordsView.swift */; };
+		EA10AFB72CFF9F41000BA431 /* HymnListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF722CFF9F41000BA431 /* HymnListView.swift */; };
+		EA10AFB82CFF9F41000BA431 /* old-hymnal-thematic-list-en.json in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF582CFF9F41000BA431 /* old-hymnal-thematic-list-en.json */; };
+		EA10AFB92CFF9F41000BA431 /* old-hymnal-en.json in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF572CFF9F41000BA431 /* old-hymnal-en.json */; };
+		EA10AFBA2CFF9F41000BA431 /* new-hymnal-en.json in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF552CFF9F41000BA431 /* new-hymnal-en.json */; };
+		EA10AFBB2CFF9F41000BA431 /* responsive_readings.json in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF5A2CFF9F41000BA431 /* responsive_readings.json */; };
+		EA10AFBC2CFF9F41000BA431 /* new-hymnal-thematic-list-en.json in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF562CFF9F41000BA431 /* new-hymnal-thematic-list-en.json */; };
+		EA10AFBD2CFF9F41000BA431 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF882CFF9F41000BA431 /* Launch Screen.storyboard */; };
+		EA10AFBE2CFF9F41000BA431 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF862CFF9F41000BA431 /* Assets.xcassets */; };
+		EA10AFBF2CFF9F41000BA431 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF532CFF9F41000BA431 /* Preview Assets.xcassets */; };
+		EA10AFC02CFF9F41000BA431 /* MainTabView.swift.bak in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF782CFF9F41000BA431 /* MainTabView.swift.bak */; };
+		EA10AFC32CFFD935000BA431 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EA10AFC22CFFD935000BA431 /* FirebaseAnalytics */; };
+		EA10AFC52CFFD935000BA431 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = EA10AFC42CFFD935000BA431 /* FirebaseRemoteConfig */; };
+		EA10AFC72CFFD9BF000BA431 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA10AFC62CFFD9BF000BA431 /* GoogleService-Info.plist */; };
+		EA10AFC92CFFDA7F000BA431 /* CloudStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFC82CFFDA7F000BA431 /* CloudStorageService.swift */; };
+		EA10AFCB2CFFE13B000BA431 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFCA2CFFE13B000BA431 /* CacheService.swift */; };
+		EA10AFCD2CFFF560000BA431 /* LyricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFCC2CFFF560000BA431 /* LyricsView.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		EA0B9CCF2CF94DFB00CD75C8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,32 +90,73 @@
 		EA0B9CBE2CF94DFA00CD75C8 /* Adventist Hymnarium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Adventist Hymnarium.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA0B9CCE2CF94DFB00CD75C8 /* Adventist HymnariumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Adventist HymnariumTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA0B9CD82CF94DFB00CD75C8 /* Adventist HymnariumUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Adventist HymnariumUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA9510642CFBDF8E003006E5 /* responsive_readings.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = responsive_readings.json; path = "SDA Hymnal/Resources/responsive_readings.json"; sourceTree = "<group>"; };
+		EA10AF482CFF9F41000BA431 /* AppDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDefaults.swift; sourceTree = "<group>"; };
+		EA10AF4A2CFF9F41000BA431 /* Bundle+DisplayName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+DisplayName.swift"; sourceTree = "<group>"; };
+		EA10AF4B2CFF9F41000BA431 /* Font+Scaling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Scaling.swift"; sourceTree = "<group>"; };
+		EA10AF4D2CFF9F41000BA431 /* Hymn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hymn.swift; sourceTree = "<group>"; };
+		EA10AF4E2CFF9F41000BA431 /* HymnalLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HymnalLanguage.swift; sourceTree = "<group>"; };
+		EA10AF4F2CFF9F41000BA431 /* HymnalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HymnalType.swift; sourceTree = "<group>"; };
+		EA10AF502CFF9F41000BA431 /* HymnSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HymnSheet.swift; sourceTree = "<group>"; };
+		EA10AF512CFF9F41000BA431 /* ResponsiveReading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsiveReading.swift; sourceTree = "<group>"; };
+		EA10AF532CFF9F41000BA431 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		EA10AF552CFF9F41000BA431 /* new-hymnal-en.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "new-hymnal-en.json"; sourceTree = "<group>"; };
+		EA10AF562CFF9F41000BA431 /* new-hymnal-thematic-list-en.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "new-hymnal-thematic-list-en.json"; sourceTree = "<group>"; };
+		EA10AF572CFF9F41000BA431 /* old-hymnal-en.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "old-hymnal-en.json"; sourceTree = "<group>"; };
+		EA10AF582CFF9F41000BA431 /* old-hymnal-thematic-list-en.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "old-hymnal-thematic-list-en.json"; sourceTree = "<group>"; };
+		EA10AF5A2CFF9F41000BA431 /* responsive_readings.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = responsive_readings.json; sourceTree = "<group>"; };
+		EA10AF5C2CFF9F41000BA431 /* AudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioService.swift; sourceTree = "<group>"; };
+		EA10AF5D2CFF9F41000BA431 /* HymnalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HymnalService.swift; sourceTree = "<group>"; };
+		EA10AF5E2CFF9F41000BA431 /* PDFService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFService.swift; sourceTree = "<group>"; };
+		EA10AF5F2CFF9F41000BA431 /* ResponsiveReadingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsiveReadingService.swift; sourceTree = "<group>"; };
+		EA10AF602CFF9F41000BA431 /* ScreenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenService.swift; sourceTree = "<group>"; };
+		EA10AF612CFF9F41000BA431 /* SheetMusicService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetMusicService.swift; sourceTree = "<group>"; };
+		EA10AF632CFF9F41000BA431 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		EA10AF642CFF9F41000BA431 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		EA10AF662CFF9F41000BA431 /* PlaybackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackButton.swift; sourceTree = "<group>"; };
+		EA10AF682CFF9F41000BA431 /* AlphabeticalIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlphabeticalIndexView.swift; sourceTree = "<group>"; };
+		EA10AF692CFF9F41000BA431 /* NumericalIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumericalIndexView.swift; sourceTree = "<group>"; };
+		EA10AF6B2CFF9F41000BA431 /* AudioSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSettingsView.swift; sourceTree = "<group>"; };
+		EA10AF6D2CFF9F41000BA431 /* AppIconPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconPreviewView.swift; sourceTree = "<group>"; };
+		EA10AF6E2CFF9F41000BA431 /* FavoriteReadingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteReadingsView.swift; sourceTree = "<group>"; };
+		EA10AF6F2CFF9F41000BA431 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
+		EA10AF702CFF9F41000BA431 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		EA10AF712CFF9F41000BA431 /* HymnDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HymnDetailView.swift; sourceTree = "<group>"; };
+		EA10AF722CFF9F41000BA431 /* HymnListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HymnListView.swift; sourceTree = "<group>"; };
+		EA10AF732CFF9F41000BA431 /* IndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexView.swift; sourceTree = "<group>"; };
+		EA10AF742CFF9F41000BA431 /* LaunchIconPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchIconPreviewView.swift; sourceTree = "<group>"; };
+		EA10AF752CFF9F41000BA431 /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
+		EA10AF762CFF9F41000BA431 /* LegalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalView.swift; sourceTree = "<group>"; };
+		EA10AF772CFF9F41000BA431 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		EA10AF782CFF9F41000BA431 /* MainTabView.swift.bak */ = {isa = PBXFileReference; lastKnownFileType = text; path = MainTabView.swift.bak; sourceTree = "<group>"; };
+		EA10AF792CFF9F41000BA431 /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
+		EA10AF7A2CFF9F41000BA431 /* NowPlayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingView.swift; sourceTree = "<group>"; };
+		EA10AF7B2CFF9F41000BA431 /* NumberPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberPadView.swift; sourceTree = "<group>"; };
+		EA10AF7C2CFF9F41000BA431 /* RecordsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsView.swift; sourceTree = "<group>"; };
+		EA10AF7D2CFF9F41000BA431 /* ResponsiveReadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsiveReadingView.swift; sourceTree = "<group>"; };
+		EA10AF7E2CFF9F41000BA431 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		EA10AF7F2CFF9F41000BA431 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		EA10AF802CFF9F41000BA431 /* SheetMusicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetMusicView.swift; sourceTree = "<group>"; };
+		EA10AF812CFF9F41000BA431 /* SplashScreenPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenPreviewView.swift; sourceTree = "<group>"; };
+		EA10AF822CFF9F41000BA431 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		EA10AF832CFF9F41000BA431 /* ThematicIndexContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThematicIndexContent.swift; sourceTree = "<group>"; };
+		EA10AF842CFF9F41000BA431 /* ThematicListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThematicListView.swift; sourceTree = "<group>"; };
+		EA10AF862CFF9F41000BA431 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EA10AF872CFF9F41000BA431 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		EA10AF882CFF9F41000BA431 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		EA10AF892CFF9F41000BA431 /* SDA_HymnalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDA_HymnalApp.swift; sourceTree = "<group>"; };
+		EA10AFC62CFFD9BF000BA431 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EA10AFC82CFFDA7F000BA431 /* CloudStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStorageService.swift; sourceTree = "<group>"; };
+		EA10AFCA2CFFE13B000BA431 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
+		EA10AFCC2CFFF560000BA431 /* LyricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		EA0B9CC02CF94DFA00CD75C8 /* SDA Hymnal */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "SDA Hymnal";
-			sourceTree = "<group>";
-		};
-		EA0B9CD12CF94DFB00CD75C8 /* SDA HymnalTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "SDA HymnalTests";
-			sourceTree = "<group>";
-		};
-		EA0B9CDB2CF94DFB00CD75C8 /* SDA HymnalUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "SDA HymnalUITests";
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		EA0B9CBB2CF94DFA00CD75C8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA10AFC32CFFD935000BA431 /* FirebaseAnalytics in Frameworks */,
+				EA10AFC52CFFD935000BA431 /* FirebaseRemoteConfig in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,11 +180,9 @@
 		EA0B9CB52CF94DFA00CD75C8 = {
 			isa = PBXGroup;
 			children = (
-				EA9510642CFBDF8E003006E5 /* responsive_readings.json */,
-				EA0B9CC02CF94DFA00CD75C8 /* SDA Hymnal */,
-				EA0B9CD12CF94DFB00CD75C8 /* SDA HymnalTests */,
-				EA0B9CDB2CF94DFB00CD75C8 /* SDA HymnalUITests */,
+				EA10AF8A2CFF9F41000BA431 /* src */,
 				EA0B9CBF2CF94DFA00CD75C8 /* Products */,
+				EA10AFC62CFFD9BF000BA431 /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -92,6 +194,166 @@
 				EA0B9CD82CF94DFB00CD75C8 /* Adventist HymnariumUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		EA10AF492CFF9F41000BA431 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				EA10AF482CFF9F41000BA431 /* AppDefaults.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		EA10AF4C2CFF9F41000BA431 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EA10AF4A2CFF9F41000BA431 /* Bundle+DisplayName.swift */,
+				EA10AF4B2CFF9F41000BA431 /* Font+Scaling.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		EA10AF522CFF9F41000BA431 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EA10AF4D2CFF9F41000BA431 /* Hymn.swift */,
+				EA10AF4E2CFF9F41000BA431 /* HymnalLanguage.swift */,
+				EA10AF4F2CFF9F41000BA431 /* HymnalType.swift */,
+				EA10AF502CFF9F41000BA431 /* HymnSheet.swift */,
+				EA10AF512CFF9F41000BA431 /* ResponsiveReading.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		EA10AF542CFF9F41000BA431 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				EA10AF532CFF9F41000BA431 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		EA10AF592CFF9F41000BA431 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				EA10AF552CFF9F41000BA431 /* new-hymnal-en.json */,
+				EA10AF562CFF9F41000BA431 /* new-hymnal-thematic-list-en.json */,
+				EA10AF572CFF9F41000BA431 /* old-hymnal-en.json */,
+				EA10AF582CFF9F41000BA431 /* old-hymnal-thematic-list-en.json */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		EA10AF5B2CFF9F41000BA431 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EA10AF592CFF9F41000BA431 /* Assets */,
+				EA10AF5A2CFF9F41000BA431 /* responsive_readings.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		EA10AF622CFF9F41000BA431 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				EA10AF5C2CFF9F41000BA431 /* AudioService.swift */,
+				EA10AF5D2CFF9F41000BA431 /* HymnalService.swift */,
+				EA10AF5E2CFF9F41000BA431 /* PDFService.swift */,
+				EA10AF5F2CFF9F41000BA431 /* ResponsiveReadingService.swift */,
+				EA10AF602CFF9F41000BA431 /* ScreenService.swift */,
+				EA10AF612CFF9F41000BA431 /* SheetMusicService.swift */,
+				EA10AFC82CFFDA7F000BA431 /* CloudStorageService.swift */,
+				EA10AFCA2CFFE13B000BA431 /* CacheService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		EA10AF652CFF9F41000BA431 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				EA10AF632CFF9F41000BA431 /* AppTheme.swift */,
+				EA10AF642CFF9F41000BA431 /* ThemeManager.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		EA10AF672CFF9F41000BA431 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				EA10AF662CFF9F41000BA431 /* PlaybackButton.swift */,
+				EA10AFCC2CFFF560000BA431 /* LyricsView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		EA10AF6A2CFF9F41000BA431 /* Index */ = {
+			isa = PBXGroup;
+			children = (
+				EA10AF682CFF9F41000BA431 /* AlphabeticalIndexView.swift */,
+				EA10AF692CFF9F41000BA431 /* NumericalIndexView.swift */,
+			);
+			path = Index;
+			sourceTree = "<group>";
+		};
+		EA10AF6C2CFF9F41000BA431 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				EA10AF6B2CFF9F41000BA431 /* AudioSettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		EA10AF852CFF9F41000BA431 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EA10AF672CFF9F41000BA431 /* Components */,
+				EA10AF6A2CFF9F41000BA431 /* Index */,
+				EA10AF6C2CFF9F41000BA431 /* Settings */,
+				EA10AF6D2CFF9F41000BA431 /* AppIconPreviewView.swift */,
+				EA10AF6E2CFF9F41000BA431 /* FavoriteReadingsView.swift */,
+				EA10AF6F2CFF9F41000BA431 /* FavoritesView.swift */,
+				EA10AF702CFF9F41000BA431 /* HistoryView.swift */,
+				EA10AF712CFF9F41000BA431 /* HymnDetailView.swift */,
+				EA10AF722CFF9F41000BA431 /* HymnListView.swift */,
+				EA10AF732CFF9F41000BA431 /* IndexView.swift */,
+				EA10AF742CFF9F41000BA431 /* LaunchIconPreviewView.swift */,
+				EA10AF752CFF9F41000BA431 /* LaunchScreenView.swift */,
+				EA10AF762CFF9F41000BA431 /* LegalView.swift */,
+				EA10AF772CFF9F41000BA431 /* MainTabView.swift */,
+				EA10AF782CFF9F41000BA431 /* MainTabView.swift.bak */,
+				EA10AF792CFF9F41000BA431 /* MiniPlayerView.swift */,
+				EA10AF7A2CFF9F41000BA431 /* NowPlayingView.swift */,
+				EA10AF7B2CFF9F41000BA431 /* NumberPadView.swift */,
+				EA10AF7C2CFF9F41000BA431 /* RecordsView.swift */,
+				EA10AF7D2CFF9F41000BA431 /* ResponsiveReadingView.swift */,
+				EA10AF7E2CFF9F41000BA431 /* SearchView.swift */,
+				EA10AF7F2CFF9F41000BA431 /* SettingsView.swift */,
+				EA10AF802CFF9F41000BA431 /* SheetMusicView.swift */,
+				EA10AF812CFF9F41000BA431 /* SplashScreenPreviewView.swift */,
+				EA10AF822CFF9F41000BA431 /* SplashScreenView.swift */,
+				EA10AF832CFF9F41000BA431 /* ThematicIndexContent.swift */,
+				EA10AF842CFF9F41000BA431 /* ThematicListView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		EA10AF8A2CFF9F41000BA431 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				EA10AF492CFF9F41000BA431 /* Constants */,
+				EA10AF4C2CFF9F41000BA431 /* Extensions */,
+				EA10AF522CFF9F41000BA431 /* Models */,
+				EA10AF542CFF9F41000BA431 /* Preview Content */,
+				EA10AF5B2CFF9F41000BA431 /* Resources */,
+				EA10AF622CFF9F41000BA431 /* Services */,
+				EA10AF652CFF9F41000BA431 /* Theme */,
+				EA10AF852CFF9F41000BA431 /* Views */,
+				EA10AF862CFF9F41000BA431 /* Assets.xcassets */,
+				EA10AF872CFF9F41000BA431 /* ContentView.swift */,
+				EA10AF882CFF9F41000BA431 /* Launch Screen.storyboard */,
+				EA10AF892CFF9F41000BA431 /* SDA_HymnalApp.swift */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -109,11 +371,10 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				EA0B9CC02CF94DFA00CD75C8 /* SDA Hymnal */,
-			);
 			name = "Adventist Hymnarium";
 			packageProductDependencies = (
+				EA10AFC22CFFD935000BA431 /* FirebaseAnalytics */,
+				EA10AFC42CFFD935000BA431 /* FirebaseRemoteConfig */,
 			);
 			productName = "SDA Hymnal";
 			productReference = EA0B9CBE2CF94DFA00CD75C8 /* Adventist Hymnarium.app */;
@@ -131,9 +392,6 @@
 			);
 			dependencies = (
 				EA0B9CD02CF94DFB00CD75C8 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				EA0B9CD12CF94DFB00CD75C8 /* SDA HymnalTests */,
 			);
 			name = "Adventist HymnariumTests";
 			packageProductDependencies = (
@@ -154,9 +412,6 @@
 			);
 			dependencies = (
 				EA0B9CDA2CF94DFB00CD75C8 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				EA0B9CDB2CF94DFB00CD75C8 /* SDA HymnalUITests */,
 			);
 			name = "Adventist HymnariumUITests";
 			packageProductDependencies = (
@@ -197,6 +452,9 @@
 			);
 			mainGroup = EA0B9CB52CF94DFA00CD75C8;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				EA10AFC12CFFD935000BA431 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EA0B9CBF2CF94DFA00CD75C8 /* Products */;
 			projectDirPath = "";
@@ -214,6 +472,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA10AFB82CFF9F41000BA431 /* old-hymnal-thematic-list-en.json in Resources */,
+				EA10AFB92CFF9F41000BA431 /* old-hymnal-en.json in Resources */,
+				EA10AFBA2CFF9F41000BA431 /* new-hymnal-en.json in Resources */,
+				EA10AFBB2CFF9F41000BA431 /* responsive_readings.json in Resources */,
+				EA10AFBC2CFF9F41000BA431 /* new-hymnal-thematic-list-en.json in Resources */,
+				EA10AFBD2CFF9F41000BA431 /* Launch Screen.storyboard in Resources */,
+				EA10AFBE2CFF9F41000BA431 /* Assets.xcassets in Resources */,
+				EA10AFC72CFFD9BF000BA431 /* GoogleService-Info.plist in Resources */,
+				EA10AFBF2CFF9F41000BA431 /* Preview Assets.xcassets in Resources */,
+				EA10AFC02CFF9F41000BA431 /* MainTabView.swift.bak in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +506,54 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA10AF8B2CFF9F41000BA431 /* AlphabeticalIndexView.swift in Sources */,
+				EA10AF8C2CFF9F41000BA431 /* Hymn.swift in Sources */,
+				EA10AF8D2CFF9F41000BA431 /* SearchView.swift in Sources */,
+				EA10AFC92CFFDA7F000BA431 /* CloudStorageService.swift in Sources */,
+				EA10AF8E2CFF9F41000BA431 /* NumberPadView.swift in Sources */,
+				EA10AF8F2CFF9F41000BA431 /* HymnSheet.swift in Sources */,
+				EA10AF902CFF9F41000BA431 /* AppDefaults.swift in Sources */,
+				EA10AF912CFF9F41000BA431 /* ScreenService.swift in Sources */,
+				EA10AF922CFF9F41000BA431 /* FavoritesView.swift in Sources */,
+				EA10AF932CFF9F41000BA431 /* FavoriteReadingsView.swift in Sources */,
+				EA10AF942CFF9F41000BA431 /* NumericalIndexView.swift in Sources */,
+				EA10AF952CFF9F41000BA431 /* AppIconPreviewView.swift in Sources */,
+				EA10AF962CFF9F41000BA431 /* SheetMusicService.swift in Sources */,
+				EA10AF972CFF9F41000BA431 /* PDFService.swift in Sources */,
+				EA10AF982CFF9F41000BA431 /* Font+Scaling.swift in Sources */,
+				EA10AF992CFF9F41000BA431 /* HistoryView.swift in Sources */,
+				EA10AF9A2CFF9F41000BA431 /* ResponsiveReadingView.swift in Sources */,
+				EA10AF9B2CFF9F41000BA431 /* SettingsView.swift in Sources */,
+				EA10AF9C2CFF9F41000BA431 /* SDA_HymnalApp.swift in Sources */,
+				EA10AF9D2CFF9F41000BA431 /* Bundle+DisplayName.swift in Sources */,
+				EA10AF9E2CFF9F41000BA431 /* AudioSettingsView.swift in Sources */,
+				EA10AF9F2CFF9F41000BA431 /* AppTheme.swift in Sources */,
+				EA10AFA02CFF9F41000BA431 /* ContentView.swift in Sources */,
+				EA10AFA12CFF9F41000BA431 /* HymnalLanguage.swift in Sources */,
+				EA10AFA22CFF9F41000BA431 /* MainTabView.swift in Sources */,
+				EA10AFA32CFF9F41000BA431 /* HymnalService.swift in Sources */,
+				EA10AFA42CFF9F41000BA431 /* HymnDetailView.swift in Sources */,
+				EA10AFA52CFF9F41000BA431 /* ResponsiveReading.swift in Sources */,
+				EA10AFCD2CFFF560000BA431 /* LyricsView.swift in Sources */,
+				EA10AFA62CFF9F41000BA431 /* LaunchIconPreviewView.swift in Sources */,
+				EA10AFA72CFF9F41000BA431 /* SplashScreenView.swift in Sources */,
+				EA10AFA82CFF9F41000BA431 /* SplashScreenPreviewView.swift in Sources */,
+				EA10AFA92CFF9F41000BA431 /* ResponsiveReadingService.swift in Sources */,
+				EA10AFCB2CFFE13B000BA431 /* CacheService.swift in Sources */,
+				EA10AFAA2CFF9F41000BA431 /* LaunchScreenView.swift in Sources */,
+				EA10AFAB2CFF9F41000BA431 /* PlaybackButton.swift in Sources */,
+				EA10AFAC2CFF9F41000BA431 /* SheetMusicView.swift in Sources */,
+				EA10AFAD2CFF9F41000BA431 /* NowPlayingView.swift in Sources */,
+				EA10AFAE2CFF9F41000BA431 /* IndexView.swift in Sources */,
+				EA10AFAF2CFF9F41000BA431 /* AudioService.swift in Sources */,
+				EA10AFB02CFF9F41000BA431 /* HymnalType.swift in Sources */,
+				EA10AFB12CFF9F41000BA431 /* LegalView.swift in Sources */,
+				EA10AFB22CFF9F41000BA431 /* ThematicListView.swift in Sources */,
+				EA10AFB32CFF9F41000BA431 /* ThematicIndexContent.swift in Sources */,
+				EA10AFB42CFF9F41000BA431 /* ThemeManager.swift in Sources */,
+				EA10AFB52CFF9F41000BA431 /* MiniPlayerView.swift in Sources */,
+				EA10AFB62CFF9F41000BA431 /* RecordsView.swift in Sources */,
+				EA10AFB72CFF9F41000BA431 /* HymnListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,11 +713,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"SDA Hymnal/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = TQMND62F2W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "SDA-Hymnal-Info.plist";
+				INFOPLIST_FILE = "adventist-hymnarium-info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Adventist Hymnarium";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.reference";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -429,11 +745,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"SDA Hymnal/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = TQMND62F2W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "SDA-Hymnal-Info.plist";
+				INFOPLIST_FILE = "adventist-hymnarium-info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Adventist Hymnarium";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.reference";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -566,6 +882,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EA10AFC12CFFD935000BA431 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EA10AFC22CFFD935000BA431 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA10AFC12CFFD935000BA431 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		EA10AFC42CFFD935000BA431 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA10AFC12CFFD935000BA431 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EA0B9CB62CF94DFA00CD75C8 /* Project object */;
 }
