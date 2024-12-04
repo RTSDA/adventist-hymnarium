@@ -30,7 +30,30 @@ DerivedData
 *.xcworkspace
 !default.xcworkspace
 
+# Swift Package Manager
+.build/
+.swiftpm/
+
 # macOS
 .DS_Store
 .AppleDouble
 .LSOverride
+
+# Python virtual environment
+venv/
+
+# Firebase
+GoogleService-Info.plist
+!GoogleService-Info.template.plist
+
+# App Data
+responsive_readings.json
+!responsive_readings.template.json
+
+# Build artifacts
+*.ipa
+*.app.dSYM.zip
+*.app.dSYM
+
+# Cache directories
+.cache/

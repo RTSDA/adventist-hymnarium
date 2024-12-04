@@ -224,4 +224,17 @@ class HymnalService: ObservableObject {
             number >= 696 && number <= 920 && self.currentLanguage.id == HymnalType.current.languageCode
         }
     }
+    
+    // Navigation helpers
+    func previousHymnNumber(from current: Int) -> Int? {
+        let sortedNumbers = hymns.map { $0.number }.sorted()
+        guard let currentIndex = sortedNumbers.firstIndex(of: current) else { return nil }
+        return currentIndex > 0 ? sortedNumbers[currentIndex - 1] : nil
+    }
+    
+    func nextHymnNumber(from current: Int) -> Int? {
+        let sortedNumbers = hymns.map { $0.number }.sorted()
+        guard let currentIndex = sortedNumbers.firstIndex(of: current) else { return nil }
+        return currentIndex < sortedNumbers.count - 1 ? sortedNumbers[currentIndex + 1] : nil
+    }
 }

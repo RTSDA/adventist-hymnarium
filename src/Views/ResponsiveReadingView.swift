@@ -8,80 +8,60 @@ struct ResponsiveReadingView: View {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                titleView
+            VStack(alignment: .leading, spacing: AppTheme.padding) {
+                Text(reading.title)
+                    .font(AppTheme.standardFont)
+                    .foregroundColor(AppTheme.textColor)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.bottom, AppTheme.padding)
                 
                 if reading.sections.isEmpty {
                     Text(reading.formattedContent)
-                        .scaledFontSize(fontSize)
+                        .font(AppTheme.standardFont)
+                        .foregroundColor(AppTheme.textColor)
                         .multilineTextAlignment(.center)
-                        .lineSpacing(8)
-                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, AppTheme.padding)
                 } else {
                     ForEach(reading.sections.sorted(by: { $0.order < $1.order })) { section in
-                        SectionView(section: section, fontSize: fontSize)
+                        SectionView(section: section)
                     }
                 }
             }
             .padding()
         }
+        .background(AppTheme.backgroundColor)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                favoriteButton
+                Button(action: {
+                    readingService.toggleFavorite(for: reading)
+                }) {
+                    Image(systemName: readingService.isFavorite(reading) ? "heart.fill" : "heart")
+                        .foregroundColor(readingService.isFavorite(reading) ? AppTheme.accentColor : AppTheme.textColor)
+                }
             }
-        }
-    }
-    
-    private var titleView: some View {
-        Text(reading.title)
-            .scaledFontSize(fontSize + 4)
-            .fontWeight(.bold)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(.bottom)
-    }
-    
-    private var favoriteButton: some View {
-        Button(action: {
-            readingService.toggleFavorite(for: reading)
-        }) {
-            Image(systemName: readingService.isFavorite(reading) ? "heart.fill" : "heart")
-                .foregroundColor(readingService.isFavorite(reading) ? .red : .primary)
         }
     }
 }
 
 struct SectionView: View {
     let section: ResponsiveReading.Section
-    let fontSize: Double
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(sectionTitle)
-                    .scaledFontSize(fontSize - 2)
-                    .foregroundColor(.secondary)
-                Spacer()
+            if let role = section.role {
+                Text(role)
+                    .font(AppTheme.standardFont)
+                    .foregroundColor(AppTheme.accentColor)
             }
             
-            Text(section.formattedContent)
-                .scaledFontSize(fontSize)
-                .foregroundColor(section.type.textColor)
-                .lineSpacing(8)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.leading, section.type == .dark ? 16 : 0)
+            Text(section.content)
+                .font(AppTheme.standardFont)
+                .foregroundColor(AppTheme.textColor)
         }
-    }
-    
-    private var sectionTitle: String {
-        switch section.type {
-        case .all:
-            return "All"
-        case .light:
-            return "Leader"
-        case .dark:
-            return "Congregation"
-        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, AppTheme.padding)
     }
 }
 

@@ -51,9 +51,9 @@ struct HymnDetailView: View {
                     Button(action: {
                         Task {
                             if isPlaying {
-                                audioService.stop()
+                                await audioService.stop()
                             } else {
-                                await audioService.loadAndPlay(hymnNumber: hymn.number)
+                                try? await audioService.loadAndPlay(hymnNumber: hymn.number)
                             }
                         }
                     }) {

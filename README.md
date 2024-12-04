@@ -14,6 +14,17 @@ This repository contains only the essential project files:
 
 The application requires additional resources that are not tracked in the repository. These must be obtained separately:
 
+### Firebase Configuration
+The app uses Firebase for analytics, remote configuration, and storage. You'll need to:
+1. Create a Firebase project at [Firebase Console](https://console.firebase.google.com)
+2. Add an iOS app to your Firebase project
+3. Download the `GoogleService-Info.plist` configuration file
+4. Place it in the project root directory
+   - Note: A template file `GoogleService-Info.template.plist` is provided as reference
+5. Set up Firebase Storage for hymn audio and sheet music files
+   - Audio files should be organized by hymnal year (e.g. "1985/001.mp3")
+   - Sheet music PDFs should follow the same structure (e.g. "1985/001.pdf")
+
 ### Data Files
 Place these JSON files in `src/Resources/Assets/`:
 - `new-hymnal-en.json` - Data for the 1985 hymnal
@@ -21,17 +32,6 @@ Place these JSON files in `src/Resources/Assets/`:
 - `old-hymnal-en.json` - Data for the 1941 hymnal
 - `old-hymnal-thematic-list-en.json` - Thematic index for 1941 hymnal
 - `responsive_readings.json` - Responsive readings
-
-### Media Files
-Create a `media` directory with the following structure:
-```
-media/
-├── audio/
-│   └── 1985/          # Audio files for 1985 hymnal (.mp3)
-└── sheet-music/
-    ├── 1941/          # Sheet music from 1941 hymnal (.pdf)
-    └── 1985/          # Sheet music from 1985 hymnal (.pdf)
-```
 
 ### Utility Scripts
 The `scripts` directory (available separately) contains utilities for:
@@ -44,18 +44,23 @@ The `scripts` directory (available separately) contains utilities for:
 1. Clone this repository
 2. Contact the project maintainers to obtain:
    - Required JSON data files
-   - Media files (audio and sheet music)
    - Utility scripts (if needed for development)
-3. Place the files in their respective directories as described above
-4. Open `adventist-hymnarium.xcodeproj` in Xcode
-5. Build and run the project
+3. Place the data files in their respective directories as described above
+4. Set up Firebase:
+   - Create a Firebase project
+   - Add your iOS app to the project
+   - Download and add `GoogleService-Info.plist`
+   - Configure Firebase Storage with proper media files
+5. Open `adventist-hymnarium.xcodeproj` in Xcode
+6. Build and run the project
 
 ## Development
 
 This is an iOS application built using Xcode. Make sure you have:
 - Xcode installed
+- Firebase configuration in place
 - All required data files in place
-- Media files available if testing audio or sheet music functionality
+- Firebase Storage configured with audio and sheet music files
 
 ## License
 
@@ -72,7 +77,7 @@ by the GPL license and require proper authorization for use.
 
 ## Contact
 
-For access to data files, media resources, or scripts, please contact the project maintainers.
+For access to data files or development resources, please contact the project maintainers.
 
 For permissions regarding hymnal content usage, contact:
 General Conference Corporation of Seventh-day Adventists
