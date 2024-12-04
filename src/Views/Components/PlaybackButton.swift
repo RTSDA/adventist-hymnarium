@@ -8,7 +8,9 @@ struct PlaybackButton: View {
     var body: some View {
         Button(action: {
             if isPlaying {
-                audioService.stop()
+                Task {
+                    await audioService.stop()
+                }
             } else {
                 action()
             }

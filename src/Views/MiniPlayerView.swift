@@ -35,10 +35,12 @@ struct MiniPlayerView: View {
                 
                 // Play/Pause button
                 Button {
-                    if audioService.isPlaying {
-                        audioService.pause()
-                    } else {
-                        audioService.resumePlayback()
+                    Task {
+                        if audioService.isPlaying {
+                            await audioService.pause()
+                        } else {
+                            try? await audioService.play()
+                        }
                     }
                 } label: {
                     Image(systemName: audioService.isPlaying ? "pause.fill" : "play.fill")
@@ -49,50 +51,37 @@ struct MiniPlayerView: View {
                 
                 // Close button
                 Button {
-                    audioService.stop()
+                    Task {
+                        await audioService.stop()
+                    }
                 } label: {
                     Image(systemName: "xmark")
-                        .font(.body)
+                        .font(.title3)
                         .foregroundColor(.secondary)
-                        .frame(width: 32, height: 32)
+                        .frame(width: 44, height: 44)
                 }
             }
             .padding(.horizontal)
-            .padding(.vertical, 8)
-            .contentShape(Rectangle()) // Make entire area tappable
-            .offset(x: offset)
-            .gesture(
-                DragGesture()
-                    .onChanged { value in
-                        // Only allow horizontal drag
-                        offset = value.translation.width
-                    }
-                    .onEnded { value in
-                        let width = UIScreen.main.bounds.width
-                        let dragPercentage = abs(value.translation.width / width)
-                        let velocity = abs(value.velocity.width)
-                        
-                        // Dismiss if dragged more than 30% of the way or with high velocity
-                        if dragPercentage > 0.3 || velocity > 800 {
-                            withAnimation(.easeOut(duration: 0.2)) {
-                                // Determine direction and animate accordingly
-                                offset = value.translation.width > 0 ? width : -width
-                            }
-                            // Stop playback after animation
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                audioService.stop()
-                            }
-                        } else {
-                            // Reset position if not dismissed
-                            withAnimation(.easeOut(duration: 0.2)) {
-                                offset = 0
-                            }
-                        }
-                    }
-            )
+            .frame(height: 56)
             .sheet(isPresented: $showNowPlaying) {
                 NowPlayingView()
             }
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        offset = value.translation.width
+                    }
+                    .onEnded { value in
+                        if value.translation.width > 50 {
+                            Task {
+                                await audioService.stop()
+                            }
+                        }
+                        offset = 0
+                    }
+            )
+            .offset(x: offset)
+            .animation(.spring(), value: offset)
         }
     }
 }

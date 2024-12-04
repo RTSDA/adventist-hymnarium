@@ -16,30 +16,29 @@ struct NowPlayingView: View {
                             .scaledFont(.title2)
                             .fontWeight(.bold)
                             .multilineTextAlignment(.center)
-                        
-                        if let firstVerse = hymn.verses.first {
-                            Text(firstVerse)
-                                .scaledFont(.body)
-                                .foregroundColor(.secondary)
-                                .multilineTextAlignment(.center)
-                                .lineLimit(2)
-                        }
                     }
                     .padding(.horizontal)
                     
+                    // Lyrics
+                    LyricsView(hymn: hymn)
+                    
                     // Progress bar
-                    if let player = audioService.player {
+                    if audioService.duration > 0 {
                         VStack {
                             Slider(value: .init(
-                                get: { player.currentTime },
-                                set: { audioService.seek(to: $0) }
-                            ), in: 0...player.duration)
+                                get: { audioService.currentTime },
+                                set: { newTime in
+                                    Task {
+                                        await audioService.seek(to: newTime)
+                                    }
+                                }
+                            ), in: 0...audioService.duration)
                             
                             HStack {
-                                Text(formatTime(player.currentTime))
+                                Text(formatTime(audioService.currentTime))
                                     .scaledFont(.caption)
                                 Spacer()
-                                Text(formatTime(player.duration))
+                                Text(formatTime(audioService.duration))
                                     .scaledFont(.caption)
                             }
                             .foregroundColor(.secondary)
@@ -50,10 +49,16 @@ struct NowPlayingView: View {
                     // Playback controls
                     HStack(spacing: 40) {
                         Button(action: {
-                            audioService.pause()
+                            Task {
+                                if audioService.isPlaying {
+                                    await audioService.pause()
+                                } else {
+                                    try? await audioService.play()
+                                }
+                            }
                         }) {
-                            Image(systemName: audioService.isPlaying ? "pause.fill" : "play.fill")
-                                .font(.title)
+                            Image(systemName: audioService.isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                                .font(.system(size: 50))
                                 .foregroundColor(.accentColor)
                         }
                     }
