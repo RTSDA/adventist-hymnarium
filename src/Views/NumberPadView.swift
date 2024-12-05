@@ -141,7 +141,7 @@ struct NumberPadView: View {
             if let number = Int(enteredNumber) {
                 // Check for responsive reading first (only in 1985 hymnal)
                 if hymnalService.currentLanguage == .english1985 && number >= 696 && number <= 920,
-                   let reading = readingService.reading(for: number) {
+                   let reading = readingService.reading(number: number) {
                     selectedReading = reading
                 } else if let hymn = hymnalService.hymn(number: number) {
                     selectedHymn = hymn

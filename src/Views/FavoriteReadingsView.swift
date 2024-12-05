@@ -6,10 +6,11 @@ struct FavoriteReadingsView: View {
     var body: some View {
         List {
             if readingService.sortedFavoriteReadings.isEmpty {
-                Text("No favorite readings yet")
-                    .foregroundColor(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .listRowBackground(Color.clear)
+                ContentUnavailableView(
+                    "No Favorite Readings",
+                    systemImage: "heart",
+                    description: Text("Your favorite readings will appear here.")
+                )
             } else {
                 ForEach(readingService.sortedFavoriteReadings) { reading in
                     NavigationLink {

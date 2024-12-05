@@ -53,7 +53,7 @@ struct ResponsiveReadingsListView: View {
     var body: some View {
         List {
             ForEach(696...920, id: \.self) { number in
-                if let reading = responsiveReadingService.reading(for: number) {
+                if let reading = responsiveReadingService.reading(number: number) {
                     NavigationLink {
                         ResponsiveReadingView(reading: reading)
                     } label: {

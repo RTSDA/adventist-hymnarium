@@ -103,7 +103,6 @@ final class AudioService: NSObject, ObservableObject {
     @MainActor
     func play() async throws {
         if let player = player {
-            await player.seek(to: .zero)
             player.play()
             isPlaying = true
             updateNowPlaying()

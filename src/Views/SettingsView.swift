@@ -10,6 +10,8 @@ struct SettingsView: View {
     @StateObject private var themeManager = ThemeManager.shared
     @StateObject private var hymnalService = HymnalService.shared
     @State private var showingHelp = false
+    @State private var showFavoritesAlert = false
+    @State private var showRecentHymnsAlert = false
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
     var body: some View {
@@ -72,19 +74,21 @@ struct SettingsView: View {
     private var mainSettingsSection: some View {
         GroupBox(label: Text("Hymnal").scaledFont(.headline)) {
             VStack(alignment: .leading, spacing: 16) {
-                Picker(selection: $selectedHymnal) {
-                    ForEach(HymnalType.allCases, id: \.rawValue) { hymnal in
+                Picker("Selected Hymnal", selection: $selectedHymnal) {
+                    ForEach(HymnalType.allCases) { hymnal in
                         Text(hymnal.displayName)
                             .scaledFont(.body)
                             .tag(hymnal.rawValue)
                     }
-                } label: {
-                    Text("Selected Hymnal")
-                        .scaledFont(.headline)
                 }
                 .onChange(of: selectedHymnal) { oldValue, newValue in
                     let hymnalType = HymnalType(rawValue: newValue) ?? .current
                     let language = hymnalType == .current ? HymnalLanguage.english1985 : HymnalLanguage.english1941
+                    
+                    // Save the selected hymnal type
+                    UserDefaults.standard.set(hymnalType.rawValue, forKey: "selectedHymnal")
+                    
+                    // Update the hymnal service language
                     Task {
                         await hymnalService.setLanguage(language)
                     }
@@ -141,12 +145,22 @@ struct SettingsView: View {
                 }
                 
                 Button {
-                    RecentHymnsManager.shared.clearRecentHymns()
+                    showRecentHymnsAlert = true
                 } label: {
                     Text("Clear Recent Hymns")
                         .scaledFont(.headline)
                 }
                 .foregroundColor(.red)
+                .alert("Clear Recent Hymns?", isPresented: $showRecentHymnsAlert) {
+                    Button("Cancel", role: .cancel) { }
+                    Button("Clear", role: .destructive) {
+                        Task {
+                            await hymnalService.clearRecentHymns()
+                        }
+                    }
+                } message: {
+                    Text("This will remove all hymns from your recent history.")
+                }
             }
             .padding()
         }
@@ -156,13 +170,23 @@ struct SettingsView: View {
         GroupBox(label: Text("Data").scaledFont(.headline)) {
             VStack(alignment: .leading, spacing: 16) {
                 Button {
-                    FavoritesManager.shared.clearFavorites()
-                    ResponsiveReadingService.shared.clearFavorites()
+                    showFavoritesAlert = true
                 } label: {
                     Text("Clear Favorites")
                         .scaledFont(.headline)
                 }
                 .foregroundColor(.red)
+                .alert("Clear Favorites?", isPresented: $showFavoritesAlert) {
+                    Button("Cancel", role: .cancel) { }
+                    Button("Clear", role: .destructive) {
+                        Task {
+                            await FavoritesManager.shared.clearFavorites()
+                            await ResponsiveReadingService.shared.clearFavorites()
+                        }
+                    }
+                } message: {
+                    Text("This will remove all hymns and readings from your favorites.")
+                }
             }
             .padding()
         }

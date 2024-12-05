@@ -1,13 +1,15 @@
 import Foundation
 
-enum HymnalType: String, CaseIterable {
-    case current = "sda"
-    case old1941 = "old"
+enum HymnalType: String, CaseIterable, Identifiable {
+    case current = "en-newVersion"
+    case old1941 = "en-oldVersion"
+    
+    var id: String { rawValue }
     
     var displayName: String {
         switch self {
         case .current:
-            return "SDA Hymnal (1985)"
+            return "Adventist Hymnal (1985)"
         case .old1941:
             return "Church Hymnal (1941)"
         }

@@ -1,71 +1,96 @@
 import Foundation
 
-struct HymnalLanguage: Equatable {
-    /// Identifier for comparative Equals
-    let id: String
-    let twoLetterIsoLanguageName: String
-    let name: String
-    let detail: String
-    let year: Int
-    let hymnsFileName: String
-    let thematicHymnsFileName: String?
-    let hymnsSheetsFileName: String?
+enum HymnalLanguage: String, CaseIterable {
+    case english1985 = "en-newVersion"
+    case english1941 = "en-oldVersion"
+    case spanish2009 = "es-newVersion"
+    case russian = "ru-newVersion"
+    
+    var id: String { rawValue }
+    
+    var twoLetterIsoLanguageName: String {
+        switch self {
+        case .english1985, .english1941:
+            return "en"
+        case .spanish2009:
+            return "es"
+        case .russian:
+            return "ru"
+        }
+    }
+    
+    var name: String {
+        switch self {
+        case .english1985:
+            return "New Version 1985"
+        case .english1941:
+            return "Old Version 1941"
+        case .spanish2009:
+            return "Nueva Versión 2009"
+        case .russian:
+            return "Русская Версия"
+        }
+    }
+    
+    var detail: String {
+        switch self {
+        case .english1985, .english1941:
+            return "English"
+        case .spanish2009:
+            return "Español"
+        case .russian:
+            return "Русский"
+        }
+    }
+    
+    var year: Int {
+        switch self {
+        case .english1985:
+            return 1985
+        case .english1941:
+            return 1941
+        case .spanish2009:
+            return 2009
+        case .russian:
+            return 2020
+        }
+    }
+    
+    var hymnsFileName: String {
+        switch self {
+        case .english1985:
+            return "new-hymnal-en.json"
+        case .english1941:
+            return "old-hymnal-en.json"
+        case .spanish2009:
+            return "new-hymnal-es.json"
+        case .russian:
+            return "new-hymnal-ru.json"
+        }
+    }
+    
+    var thematicHymnsFileName: String? {
+        switch self {
+        case .english1985, .spanish2009, .russian:
+            return "new-hymnal-thematic-list-\(twoLetterIsoLanguageName).json"
+        case .english1941:
+            return "old-hymnal-thematic-list-en.json"
+        }
+    }
+    
+    var hymnsSheetsFileName: String? {
+        switch self {
+        case .english1985, .spanish2009, .russian:
+            return "PianoSheet_NewHymnal_\(twoLetterIsoLanguageName)_###"
+        case .english1941:
+            return nil
+        }
+    }
     
     var supportsThematicList: Bool { thematicHymnsFileName != nil }
     var supportsSheets: Bool { hymnsSheetsFileName != nil }
     
-    static let english1985 = HymnalLanguage(
-        id: "en-newVersion",
-        twoLetterIsoLanguageName: "en",
-        name: "New Version 1985",
-        detail: "English",
-        year: 1985,
-        hymnsFileName: "new-hymnal-en.json",
-        thematicHymnsFileName: "new-hymnal-thematic-list-en.json",
-        hymnsSheetsFileName: "PianoSheet_NewHymnal_en_###"
-    )
-    
-    static let english1941 = HymnalLanguage(
-        id: "en-oldVersion",
-        twoLetterIsoLanguageName: "en",
-        name: "Old Version 1941",
-        detail: "English",
-        year: 1941,
-        hymnsFileName: "old-hymnal-en.json",
-        thematicHymnsFileName: "old-hymnal-thematic-list-en.json",
-        hymnsSheetsFileName: nil
-    )
-    
-    static let spanish2009 = HymnalLanguage(
-        id: "es-newVersion",
-        twoLetterIsoLanguageName: "es",
-        name: "Nueva Versión 2009",
-        detail: "Español",
-        year: 2009,
-        hymnsFileName: "new-hymnal-es.json",
-        thematicHymnsFileName: "new-hymnal-thematic-list-es.json",
-        hymnsSheetsFileName: "PianoSheet_NewHymnal_es_###"
-    )
-    
-    static let russian = HymnalLanguage(
-        id: "ru-newVersion",
-        twoLetterIsoLanguageName: "ru",
-        name: "Русская Версия",
-        detail: "Русский",
-        year: 2020,
-        hymnsFileName: "new-hymnal-ru.json",
-        thematicHymnsFileName: "new-hymnal-thematic-list-ru.json",
-        hymnsSheetsFileName: "PianoSheet_NewHymnal_ru_###"
-    )
-    
-    static let supportedLanguages: [HymnalLanguage] = [
-        .english1985,  // Default
-        .english1941,
-        .spanish2009,
-        .russian
-    ]
-    
     static func getLanguage(withId id: String) -> HymnalLanguage? {
-        supportedLanguages.first { $0.id == id }
+        HymnalLanguage(rawValue: id)
     }
 }

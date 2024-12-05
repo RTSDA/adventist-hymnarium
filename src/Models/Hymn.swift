@@ -157,72 +157,16 @@ struct Verse: Identifiable, Hashable {
     }
 }
 
-// MARK: - Thematic Models
-struct ThematicList: Identifiable, Codable, Hashable {
-    var id: String { thematic }
-    let thematic: String
-    let ambits: [ThematicAmbit]
-}
-
-struct ThematicAmbit: Identifiable, Codable, Hashable {
-    var id: String { ambit }
-    let ambit: String
-    let start: Int
-    let end: Int
-    let backgroundImage: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case ambit
-        case start = "star"  // Map "star" from JSON to "start" in Swift
-        case end
-        case backgroundImage = "backimage"
-    }
-    
-    func getHymns(from allHymns: [Hymn]) -> [Hymn] {
-        guard start > 0, end >= start, start <= allHymns.count else { return [] }
-        let endIndex = min(end, allHymns.count)
-        return Array(allHymns[start-1..<endIndex])
-    }
-}
-
 // MARK: - Preview Helpers
 extension Hymn {
     static let example = Hymn(
         number: 1,
         title: "Praise to the Lord",
         verses: [
-            """
-            1.
-            Praise to the Lord, the Almighty, the King of creation!
-            O my soul, praise Him, for He is thy health and salvation!
-            All ye who hear, Now to His temple draw near;
-            Join ye in glad adoration!
-            """,
-            """
-            2.
-            Praise to the Lord, who o'er all things so wondrously reigneth,
-            Shieldeth thee under His wings, yea, so gently sustaineth!
-            Hast thou not seen How thy desires e'er have been
-            Granted in what He ordaineth?
-            """,
-            """
-            3.
-            Praise to the Lord, who doth prosper thy work and defend thee;
-            Surely His goodness and mercy here daily attend thee.
-            Ponder anew What the Almighty can do
-            If with His love He befriend thee.
-            """
-        ]
-    )
-}
-
-extension ThematicList {
-    static let example = ThematicList(
-        thematic: "Worship",
-        ambits: [
-            ThematicAmbit(ambit: "Adoration and Praise", start: 1, end: 38, backgroundImage: "Fondo1a21"),
-            ThematicAmbit(ambit: "Morning Worship", start: 39, end: 45, backgroundImage: "Fondo22a34"),
-            ThematicAmbit(ambit: "Evening Worship", start: 46, end: 58, backgroundImage: "Fondo35a45")
+            "Praise to the Lord, the Almighty, the King of creation!",
+            "O my soul, praise Him, for He is thy health and salvation!",
+            "All ye who hear, now to His temple draw near;",
+            "Praise Him in glad adoration!"
         ]
     )
 }

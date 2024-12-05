@@ -2,7 +2,6 @@ import SwiftUI
 
 struct HistoryView: View {
     @StateObject private var hymnalService = HymnalService.shared
-    @StateObject private var recentHymnsManager = RecentHymnsManager.shared
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -33,6 +32,12 @@ struct HistoryView: View {
                         }
                     }
                 }
+                .onDelete { indexSet in
+                    for index in indexSet {
+                        let hymnNumber = hymnalService.recentHymns[index]
+                        hymnalService.removeFromRecentHymns(hymnNumber)
+                    }
+                }
             }
         }
         .listStyle(PlainListStyle())
@@ -47,19 +52,16 @@ struct HistoryView: View {
             
             ToolbarItem(placement: .navigationBarTrailing) {
                 if !hymnalService.recentHymns.isEmpty {
-                    Button(action: {
-                        recentHymnsManager.clearRecentHymns()
-                        Task {
-                            await hymnalService.updateRecentHymns()
-                        }
-                    }) {
+                    Button(role: .destructive) {
+                        hymnalService.clearRecentHymns()
+                    } label: {
                         Image(systemName: "trash")
                     }
                 }
             }
         }
         .task {
-            await hymnalService.updateRecentHymns()
+            await hymnalService.refreshData()
         }
     }
 }

@@ -10,21 +10,22 @@ struct ResponsiveReadingView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: AppTheme.padding) {
                 Text(reading.title)
-                    .font(AppTheme.standardFont)
+                    .font(.title2)
+                    .fontWeight(.bold)
                     .foregroundColor(AppTheme.textColor)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.bottom, AppTheme.padding)
                 
                 if reading.sections.isEmpty {
                     Text(reading.formattedContent)
-                        .font(AppTheme.standardFont)
+                        .font(.system(size: fontSize))
                         .foregroundColor(AppTheme.textColor)
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: .infinity)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, AppTheme.padding)
                 } else {
-                    ForEach(reading.sections.sorted(by: { $0.order < $1.order })) { section in
-                        SectionView(section: section)
+                    ForEach(reading.sections) { section in
+                        ReadingSectionView(section: section, fontSize: fontSize)
                     }
                 }
             }
@@ -34,39 +35,73 @@ struct ResponsiveReadingView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    readingService.toggleFavorite(for: reading)
-                }) {
+                Button {
+                    readingService.toggleFavorite(reading)
+                } label: {
                     Image(systemName: readingService.isFavorite(reading) ? "heart.fill" : "heart")
                         .foregroundColor(readingService.isFavorite(reading) ? AppTheme.accentColor : AppTheme.textColor)
+                }
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Menu {
+                    Button {
+                        if fontSize > AppDefaults.minFontSize {
+                            fontSize -= 2
+                        }
+                    } label: {
+                        Label("Decrease Font Size", systemImage: "textformat.size.smaller")
+                    }
+                    
+                    Button {
+                        if fontSize < AppDefaults.maxFontSize {
+                            fontSize += 2
+                        }
+                    } label: {
+                        Label("Increase Font Size", systemImage: "textformat.size.larger")
+                    }
+                    
+                    Button {
+                        fontSize = AppDefaults.defaultFontSize
+                    } label: {
+                        Label("Reset Font Size", systemImage: "arrow.counterclockwise")
+                    }
+                } label: {
+                    Image(systemName: "textformat.size")
+                        .foregroundColor(AppTheme.textColor)
                 }
             }
         }
     }
 }
 
-struct SectionView: View {
+struct ReadingSectionView: View {
     let section: ResponsiveReading.Section
+    let fontSize: Double
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 4) {
             if let role = section.role {
                 Text(role)
-                    .font(AppTheme.standardFont)
-                    .foregroundColor(AppTheme.accentColor)
+                    .font(.system(.subheadline, design: .serif))
+                    .foregroundColor(.secondary)
+                    .fontWeight(.semibold)
             }
             
-            Text(section.content)
-                .font(AppTheme.standardFont)
+            Text(section.text)
+                .font(.system(size: fontSize))
                 .foregroundColor(AppTheme.textColor)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, AppTheme.padding)
+        .padding(.vertical, 4)
     }
 }
 
-#Preview {
-    NavigationStack {
-        ResponsiveReadingView(reading: ResponsiveReading.example)
+struct ResponsiveReadingView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationStack {
+            ResponsiveReadingView(reading: ResponsiveReading.example)
+        }
     }
 }

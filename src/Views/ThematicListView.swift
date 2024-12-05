@@ -61,7 +61,7 @@ struct ThematicHymnsListView: View {
     @StateObject private var hymnalService = HymnalService.shared
     
     var hymns: [Hymn] {
-        hymnalService.hymns(in: ambit)
+        ambit.getHymns(from: hymnalService.hymns)
     }
     
     var body: some View {
@@ -88,15 +88,17 @@ struct ThematicHymnsListView: View {
     }
 }
 
-#Preview {
-    NavigationView {
-        ThematicListView(thematicList: ThematicList(
-            thematic: "Categories",
-            ambits: [
-                ThematicAmbit(ambit: "Worship", start: 1, end: 20, backgroundImage: nil),
-                ThematicAmbit(ambit: "God's Love", start: 21, end: 40, backgroundImage: nil),
-                ThematicAmbit(ambit: "Praise", start: 41, end: 60, backgroundImage: nil)
-            ]
-        ))
+struct ThematicListView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            ThematicListView(thematicList: ThematicList(
+                id: 1,
+                thematic: "Categories",
+                ambits: [
+                    ThematicAmbit(ambit: "Worship", start: 1, end: 20, backgroundImage: "Fondo1a21"),
+                    ThematicAmbit(ambit: "God's Love", start: 21, end: 40, backgroundImage: "Fondo22a34")
+                ]
+            ))
+        }
     }
 }

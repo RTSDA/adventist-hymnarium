@@ -1,35 +1,42 @@
 import SwiftUI
 
 struct NumericalIndexView: View {
-    @StateObject private var hymnalService = HymnalService.shared
+    @StateObject private var viewModel = IndexViewModel()
     
     var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, spacing: 0) {
-                ForEach(hymnalService.hymns) { hymn in
+        Group {
+            if viewModel.isLoading {
+                ProgressView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else if let error = viewModel.error {
+                ErrorView(error: error)
+            } else {
+                List(viewModel.sortedHymns) { hymn in
                     NavigationLink(destination: HymnDetailView(hymn: hymn)) {
                         HStack {
                             Text("#\(hymn.number)")
                                 .font(AppTheme.standardFont)
                                 .foregroundColor(AppTheme.accentColor)
+                                .frame(width: 50, alignment: .trailing)
                             
                             Text(hymn.title)
                                 .font(AppTheme.standardFont)
                                 .foregroundColor(AppTheme.textColor)
                         }
-                        .padding(AppTheme.padding)
-                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    Divider()
                 }
+                .navigationTitle("Numerical Index")
+                .navigationBarTitleDisplayMode(.inline)
             }
         }
-        .background(AppTheme.backgroundColor)
+        .onAppear {
+            viewModel.loadData()
+        }
     }
 }
 
 #Preview {
-    NavigationStack {
+    NavigationView {
         NumericalIndexView()
     }
 }

@@ -2,6 +2,7 @@ import SwiftUI
 import Foundation
 import Combine
 
+@MainActor
 class FavoritesManager: ObservableObject {
     static let shared = FavoritesManager()
     
@@ -23,46 +24,34 @@ class FavoritesManager: ObservableObject {
         favorites = []
         
         if let data = UserDefaults.standard.array(forKey: favoritesKey) as? [Int] {
-            DispatchQueue.main.async {
-                self.favorites = Set(data)
-            }
+            favorites = Set(data)
         }
     }
     
     private func setupLanguageObserver() {
-        hymnalService.$currentLanguage
-            .sink { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.loadFavorites()
-                }
+        Task { @MainActor in
+            for await language in hymnalService.$currentLanguage.values {
+                loadFavorites()
             }
-            .store(in: &cancellables)
+        }
     }
     
-    private func saveFavorites() {
+    func toggleFavorite(_ number: Int) {
+        if favorites.contains(number) {
+            favorites.remove(number)
+        } else {
+            favorites.insert(number)
+        }
         UserDefaults.standard.set(Array(favorites), forKey: favoritesKey)
     }
     
-    func toggleFavorite(_ hymnNumber: Int) {
-        if favorites.contains(hymnNumber) {
-            favorites.remove(hymnNumber)
-        } else {
-            favorites.insert(hymnNumber)
-        }
-        saveFavorites()
+    func isFavorite(_ number: Int) -> Bool {
+        favorites.contains(number)
     }
     
     func clearFavorites() {
         favorites.removeAll()
-        saveFavorites()
-    }
-    
-    func isFavorite(_ hymnNumber: Int) -> Bool {
-        favorites.contains(hymnNumber)
-    }
-    
-    var sortedFavorites: [Int] {
-        Array(favorites).sorted()
+        UserDefaults.standard.removeObject(forKey: favoritesKey)
     }
 }
 
@@ -74,12 +63,14 @@ struct FavoritesView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            Picker("Content Type", selection: $selectedTab) {
-                Text("Hymns").tag(0)
-                Text("Readings").tag(1)
+            if hymnalService.currentLanguage == .english1985 {
+                Picker("Content Type", selection: $selectedTab) {
+                    Text("Hymns").tag(0)
+                    Text("Readings").tag(1)
+                }
+                .pickerStyle(.segmented)
+                .padding()
             }
-            .pickerStyle(.segmented)
-            .padding()
             
             TabView(selection: $selectedTab) {
                 // Hymns Tab
@@ -90,7 +81,7 @@ struct FavoritesView: View {
                             .frame(maxWidth: .infinity, alignment: .center)
                             .listRowBackground(Color.clear)
                     } else {
-                        ForEach(favoritesManager.sortedFavorites, id: \.self) { number in
+                        ForEach(favoritesManager.favorites.sorted(), id: \.self) { number in
                             if let hymn = hymnalService.hymn(number: number) {
                                 NavigationLink {
                                     HymnDetailView(hymn: hymn)
@@ -113,27 +104,29 @@ struct FavoritesView: View {
                 .tag(0)
                 
                 // Readings Tab
-                List {
-                    if readingService.sortedFavoriteReadings.isEmpty {
-                        Text("No favorite readings yet")
-                            .foregroundColor(.secondary)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .listRowBackground(Color.clear)
-                    } else {
-                        ForEach(readingService.sortedFavoriteReadings) { reading in
-                            NavigationLink {
-                                ResponsiveReadingView(reading: reading)
-                            } label: {
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text("\(reading.number). \(reading.title)")
-                                        .fontWeight(.medium)
+                if hymnalService.currentLanguage == .english1985 {
+                    List {
+                        if readingService.sortedFavoriteReadings.isEmpty {
+                            Text("No favorite readings yet")
+                                .foregroundColor(.secondary)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .listRowBackground(Color.clear)
+                        } else {
+                            ForEach(readingService.sortedFavoriteReadings) { reading in
+                                NavigationLink {
+                                    ResponsiveReadingView(reading: reading)
+                                } label: {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("\(reading.number). \(reading.title)")
+                                            .fontWeight(.medium)
+                                    }
                                 }
                             }
                         }
                     }
+                    .listStyle(.plain)
+                    .tag(1)
                 }
-                .listStyle(.plain)
-                .tag(1)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
         }

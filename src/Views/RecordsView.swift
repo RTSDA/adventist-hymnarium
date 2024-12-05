@@ -1,70 +1,51 @@
 import SwiftUI
 
-class RecentHymnsManager: ObservableObject {
-    static let shared = RecentHymnsManager()
-    
-    @Published private(set) var recentHymns: [Int] = []
-    @AppStorage("maxRecentHymns") private var maxRecentHymns = 10
-    private let recentHymnsKey = "recentHymns"
-    
-    private init() {
-        loadRecentHymns()
-    }
-    
-    private func loadRecentHymns() {
-        if let data = UserDefaults.standard.array(forKey: recentHymnsKey) as? [Int] {
-            recentHymns = Array(data.prefix(maxRecentHymns))
-        }
-    }
-    
-    private func saveRecentHymns() {
-        UserDefaults.standard.set(recentHymns, forKey: recentHymnsKey)
-    }
-    
-    func addRecentHymn(_ hymnNumber: Int) {
-        // Remove if already exists
-        recentHymns.removeAll { $0 == hymnNumber }
-        
-        // Add to beginning
-        recentHymns.insert(hymnNumber, at: 0)
-        
-        // Trim to max size
-        if recentHymns.count > maxRecentHymns {
-            recentHymns = Array(recentHymns.prefix(maxRecentHymns))
-        }
-        
-        saveRecentHymns()
-    }
-    
-    func clearRecentHymns() {
-        recentHymns.removeAll()
-        saveRecentHymns()
-    }
-}
-
 struct RecordsView: View {
-    @Environment(\.presentationMode) var presentationMode
     @StateObject private var hymnalService = HymnalService.shared
-    @StateObject private var recentHymnsManager = RecentHymnsManager.shared
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        NavigationView {
-            RecordsListView(
-                hymnalService: hymnalService,
-                recentHymns: recentHymnsManager.recentHymns,
-                clearAction: recentHymnsManager.clearRecentHymns
-            )
-            .navigationTitle("Recent Hymns")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Done") {
-                        presentationMode.wrappedValue.dismiss()
+        List {
+            if hymnalService.recentHymns.isEmpty {
+                ContentUnavailableView(
+                    "No Recent Hymns",
+                    systemImage: "clock",
+                    description: Text("Your recently viewed hymns will appear here.")
+                )
+            } else {
+                ForEach(hymnalService.recentHymns, id: \.self) { hymnNumber in
+                    if let hymn = hymnalService.hymn(number: hymnNumber) {
+                        NavigationLink {
+                            HymnDetailView(hymn: hymn)
+                                .navigationBarTitleDisplayMode(.inline)
+                        } label: {
+                            HymnRowView(hymn: hymn)
+                        }
+                    }
+                }
+                .onDelete { indexSet in
+                    for index in indexSet {
+                        let hymnNumber = hymnalService.recentHymns[index]
+                        hymnalService.removeFromRecentHymns(hymnNumber)
                     }
                 }
             }
         }
+        .navigationTitle("Recent Hymns")
+        .toolbar {
+            if !hymnalService.recentHymns.isEmpty {
+                Button(role: .destructive) {
+                    hymnalService.clearRecentHymns()
+                } label: {
+                    Label("Clear All", systemImage: "trash")
+                }
+            }
+        }
     }
+}
+
+#Preview {
+    RecordsView()
 }
 
 private struct RecordsListView: View {

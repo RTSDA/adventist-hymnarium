@@ -52,11 +52,6 @@
 		EA10AFB52CFF9F41000BA431 /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF792CFF9F41000BA431 /* MiniPlayerView.swift */; };
 		EA10AFB62CFF9F41000BA431 /* RecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF7C2CFF9F41000BA431 /* RecordsView.swift */; };
 		EA10AFB72CFF9F41000BA431 /* HymnListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF722CFF9F41000BA431 /* HymnListView.swift */; };
-		EA10AFB82CFF9F41000BA431 /* old-hymnal-thematic-list-en.json in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF582CFF9F41000BA431 /* old-hymnal-thematic-list-en.json */; };
-		EA10AFB92CFF9F41000BA431 /* old-hymnal-en.json in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF572CFF9F41000BA431 /* old-hymnal-en.json */; };
-		EA10AFBA2CFF9F41000BA431 /* new-hymnal-en.json in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF552CFF9F41000BA431 /* new-hymnal-en.json */; };
-		EA10AFBB2CFF9F41000BA431 /* responsive_readings.json in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF5A2CFF9F41000BA431 /* responsive_readings.json */; };
-		EA10AFBC2CFF9F41000BA431 /* new-hymnal-thematic-list-en.json in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF562CFF9F41000BA431 /* new-hymnal-thematic-list-en.json */; };
 		EA10AFBD2CFF9F41000BA431 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF882CFF9F41000BA431 /* Launch Screen.storyboard */; };
 		EA10AFBE2CFF9F41000BA431 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF862CFF9F41000BA431 /* Assets.xcassets */; };
 		EA10AFBF2CFF9F41000BA431 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF532CFF9F41000BA431 /* Preview Assets.xcassets */; };
@@ -67,6 +62,15 @@
 		EA10AFC92CFFDA7F000BA431 /* CloudStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFC82CFFDA7F000BA431 /* CloudStorageService.swift */; };
 		EA10AFCB2CFFE13B000BA431 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFCA2CFFE13B000BA431 /* CacheService.swift */; };
 		EA10AFCD2CFFF560000BA431 /* LyricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFCC2CFFF560000BA431 /* LyricsView.swift */; };
+		EA10AFCF2D00F345000BA431 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFCE2D00F345000BA431 /* DataService.swift */; };
+		EA10AFD12D00F357000BA431 /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFD02D00F357000BA431 /* DatabaseService.swift */; };
+		EA10AFD32D00F3D5000BA431 /* RecentHymnsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFD22D00F3D5000BA431 /* RecentHymnsManager.swift */; };
+		EA10AFD52D011C20000BA431 /* ThematicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFD42D011C20000BA431 /* ThematicList.swift */; };
+		EA10AFD92D0120DE000BA431 /* ThematicIndexViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFD72D0120DE000BA431 /* ThematicIndexViewModel.swift */; };
+		EA10AFDA2D0120DE000BA431 /* IndexViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFD62D0120DE000BA431 /* IndexViewModel.swift */; };
+		EA10AFDC2D012210000BA431 /* ThematicListDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFDB2D012210000BA431 /* ThematicListDetailView.swift */; };
+		EA10AFE12D0127CD000BA431 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFE02D0127CD000BA431 /* ErrorView.swift */; };
+		EA10AFE52D013864000BA431 /* hymnarium.db in Resources */ = {isa = PBXBuildFile; fileRef = EA10AFE42D013864000BA431 /* hymnarium.db */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +152,15 @@
 		EA10AFC82CFFDA7F000BA431 /* CloudStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStorageService.swift; sourceTree = "<group>"; };
 		EA10AFCA2CFFE13B000BA431 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		EA10AFCC2CFFF560000BA431 /* LyricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsView.swift; sourceTree = "<group>"; };
+		EA10AFCE2D00F345000BA431 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		EA10AFD02D00F357000BA431 /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
+		EA10AFD22D00F3D5000BA431 /* RecentHymnsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentHymnsManager.swift; sourceTree = "<group>"; };
+		EA10AFD42D011C20000BA431 /* ThematicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThematicList.swift; sourceTree = "<group>"; };
+		EA10AFD62D0120DE000BA431 /* IndexViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexViewModel.swift; sourceTree = "<group>"; };
+		EA10AFD72D0120DE000BA431 /* ThematicIndexViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThematicIndexViewModel.swift; sourceTree = "<group>"; };
+		EA10AFDB2D012210000BA431 /* ThematicListDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThematicListDetailView.swift; sourceTree = "<group>"; };
+		EA10AFE02D0127CD000BA431 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		EA10AFE42D013864000BA431 /* hymnarium.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = hymnarium.db; path = src/Resources/hymnarium.db; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +196,7 @@
 				EA10AF8A2CFF9F41000BA431 /* src */,
 				EA0B9CBF2CF94DFA00CD75C8 /* Products */,
 				EA10AFC62CFFD9BF000BA431 /* GoogleService-Info.plist */,
+				EA10AFE42D013864000BA431 /* hymnarium.db */,
 			);
 			sourceTree = "<group>";
 		};
@@ -221,6 +235,7 @@
 				EA10AF4F2CFF9F41000BA431 /* HymnalType.swift */,
 				EA10AF502CFF9F41000BA431 /* HymnSheet.swift */,
 				EA10AF512CFF9F41000BA431 /* ResponsiveReading.swift */,
+				EA10AFD42D011C20000BA431 /* ThematicList.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -264,6 +279,10 @@
 				EA10AF612CFF9F41000BA431 /* SheetMusicService.swift */,
 				EA10AFC82CFFDA7F000BA431 /* CloudStorageService.swift */,
 				EA10AFCA2CFFE13B000BA431 /* CacheService.swift */,
+				EA10AFCE2D00F345000BA431 /* DataService.swift */,
+				EA10AFD02D00F357000BA431 /* DatabaseService.swift */,
+				EA10AFD22D00F3D5000BA431 /* RecentHymnsManager.swift */,
+				EA10AFDE2D01234A000BA431 /* Protocols */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -282,6 +301,7 @@
 			children = (
 				EA10AF662CFF9F41000BA431 /* PlaybackButton.swift */,
 				EA10AFCC2CFFF560000BA431 /* LyricsView.swift */,
+				EA10AFE02D0127CD000BA431 /* ErrorView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -306,6 +326,7 @@
 		EA10AF852CFF9F41000BA431 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EA10AFD82D0120DE000BA431 /* ViewModels */,
 				EA10AF672CFF9F41000BA431 /* Components */,
 				EA10AF6A2CFF9F41000BA431 /* Index */,
 				EA10AF6C2CFF9F41000BA431 /* Settings */,
@@ -333,6 +354,7 @@
 				EA10AF822CFF9F41000BA431 /* SplashScreenView.swift */,
 				EA10AF832CFF9F41000BA431 /* ThematicIndexContent.swift */,
 				EA10AF842CFF9F41000BA431 /* ThematicListView.swift */,
+				EA10AFDB2D012210000BA431 /* ThematicListDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -354,6 +376,23 @@
 				EA10AF892CFF9F41000BA431 /* SDA_HymnalApp.swift */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		EA10AFD82D0120DE000BA431 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				EA10AFD62D0120DE000BA431 /* IndexViewModel.swift */,
+				EA10AFD72D0120DE000BA431 /* ThematicIndexViewModel.swift */,
+			);
+			name = ViewModels;
+			path = src/ViewModels;
+			sourceTree = SOURCE_ROOT;
+		};
+		EA10AFDE2D01234A000BA431 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -472,13 +511,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA10AFB82CFF9F41000BA431 /* old-hymnal-thematic-list-en.json in Resources */,
-				EA10AFB92CFF9F41000BA431 /* old-hymnal-en.json in Resources */,
-				EA10AFBA2CFF9F41000BA431 /* new-hymnal-en.json in Resources */,
-				EA10AFBB2CFF9F41000BA431 /* responsive_readings.json in Resources */,
-				EA10AFBC2CFF9F41000BA431 /* new-hymnal-thematic-list-en.json in Resources */,
 				EA10AFBD2CFF9F41000BA431 /* Launch Screen.storyboard in Resources */,
 				EA10AFBE2CFF9F41000BA431 /* Assets.xcassets in Resources */,
+				EA10AFE52D013864000BA431 /* hymnarium.db in Resources */,
 				EA10AFC72CFFD9BF000BA431 /* GoogleService-Info.plist in Resources */,
 				EA10AFBF2CFF9F41000BA431 /* Preview Assets.xcassets in Resources */,
 				EA10AFC02CFF9F41000BA431 /* MainTabView.swift.bak in Resources */,
@@ -506,14 +541,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA10AFD52D011C20000BA431 /* ThematicList.swift in Sources */,
 				EA10AF8B2CFF9F41000BA431 /* AlphabeticalIndexView.swift in Sources */,
 				EA10AF8C2CFF9F41000BA431 /* Hymn.swift in Sources */,
 				EA10AF8D2CFF9F41000BA431 /* SearchView.swift in Sources */,
 				EA10AFC92CFFDA7F000BA431 /* CloudStorageService.swift in Sources */,
 				EA10AF8E2CFF9F41000BA431 /* NumberPadView.swift in Sources */,
 				EA10AF8F2CFF9F41000BA431 /* HymnSheet.swift in Sources */,
+				EA10AFD12D00F357000BA431 /* DatabaseService.swift in Sources */,
 				EA10AF902CFF9F41000BA431 /* AppDefaults.swift in Sources */,
 				EA10AF912CFF9F41000BA431 /* ScreenService.swift in Sources */,
+				EA10AFCF2D00F345000BA431 /* DataService.swift in Sources */,
 				EA10AF922CFF9F41000BA431 /* FavoritesView.swift in Sources */,
 				EA10AF932CFF9F41000BA431 /* FavoriteReadingsView.swift in Sources */,
 				EA10AF942CFF9F41000BA431 /* NumericalIndexView.swift in Sources */,
@@ -542,6 +580,7 @@
 				EA10AFCB2CFFE13B000BA431 /* CacheService.swift in Sources */,
 				EA10AFAA2CFF9F41000BA431 /* LaunchScreenView.swift in Sources */,
 				EA10AFAB2CFF9F41000BA431 /* PlaybackButton.swift in Sources */,
+				EA10AFE12D0127CD000BA431 /* ErrorView.swift in Sources */,
 				EA10AFAC2CFF9F41000BA431 /* SheetMusicView.swift in Sources */,
 				EA10AFAD2CFF9F41000BA431 /* NowPlayingView.swift in Sources */,
 				EA10AFAE2CFF9F41000BA431 /* IndexView.swift in Sources */,
@@ -550,9 +589,13 @@
 				EA10AFB12CFF9F41000BA431 /* LegalView.swift in Sources */,
 				EA10AFB22CFF9F41000BA431 /* ThematicListView.swift in Sources */,
 				EA10AFB32CFF9F41000BA431 /* ThematicIndexContent.swift in Sources */,
+				EA10AFD32D00F3D5000BA431 /* RecentHymnsManager.swift in Sources */,
 				EA10AFB42CFF9F41000BA431 /* ThemeManager.swift in Sources */,
 				EA10AFB52CFF9F41000BA431 /* MiniPlayerView.swift in Sources */,
 				EA10AFB62CFF9F41000BA431 /* RecordsView.swift in Sources */,
+				EA10AFDC2D012210000BA431 /* ThematicListDetailView.swift in Sources */,
+				EA10AFD92D0120DE000BA431 /* ThematicIndexViewModel.swift in Sources */,
+				EA10AFDA2D0120DE000BA431 /* IndexViewModel.swift in Sources */,
 				EA10AFB72CFF9F41000BA431 /* HymnListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

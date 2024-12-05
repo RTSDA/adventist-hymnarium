@@ -33,64 +33,62 @@ struct SearchView: View {
     }
     
     var body: some View {
-        NavigationView {
-            VStack(spacing: 0) {
-                HStack {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundColor(.secondary)
-                    TextField("Search hymns", text: $searchText)
-                        .textFieldStyle(.plain)
-                        .focused($isSearchFocused)
-                        .textInputAutocapitalization(.never)
-                        .autocorrectionDisabled()
-                    if !searchText.isEmpty {
-                        Button(action: { searchText = "" }) {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.secondary)
-                        }
+        VStack(spacing: 0) {
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.secondary)
+                TextField("Search hymns", text: $searchText)
+                    .textFieldStyle(.plain)
+                    .focused($isSearchFocused)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+                if !searchText.isEmpty {
+                    Button(action: { searchText = "" }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.secondary)
                     }
                 }
-                .padding(.horizontal)
-                .padding(.vertical, 8)
-                
-                Divider()
-                
-                List {
-                    if searchText.isEmpty {
-                        Text("Search by number, title, or lyrics")
-                            .foregroundColor(.secondary)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .listRowSeparator(.hidden)
-                    } else if hymnalService.isLoading {
-                        ProgressView("Loading...")
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .listRowSeparator(.hidden)
-                    } else if filteredHymns.isEmpty {
-                        Text("No hymns found")
-                            .foregroundColor(.secondary)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .listRowSeparator(.hidden)
-                    } else {
-                        ForEach(filteredHymns) { hymn in
-                            NavigationLink(destination: HymnDetailView(hymn: hymn)) {
-                                HStack {
-                                    Text("#\(hymn.number)")
-                                        .foregroundColor(.secondary)
-                                        .frame(width: 50, alignment: .leading)
-                                    Text(hymn.title)
-                                }
+            }
+            .padding(.horizontal)
+            .padding(.vertical, 8)
+            
+            Divider()
+            
+            List {
+                if searchText.isEmpty {
+                    Text("Search by number, title, or lyrics")
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .listRowSeparator(.hidden)
+                } else if hymnalService.isLoading {
+                    ProgressView("Loading...")
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .listRowSeparator(.hidden)
+                } else if filteredHymns.isEmpty {
+                    Text("No hymns found")
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .listRowSeparator(.hidden)
+                } else {
+                    ForEach(filteredHymns) { hymn in
+                        NavigationLink(destination: HymnDetailView(hymn: hymn)) {
+                            HStack {
+                                Text("#\(hymn.number)")
+                                    .foregroundColor(.secondary)
+                                    .frame(width: 50, alignment: .leading)
+                                Text(hymn.title)
                             }
                         }
                     }
                 }
-                .listStyle(.plain)
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Done") {
-                        dismiss()
-                    }
+            .listStyle(.plain)
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("Done") {
+                    dismiss()
                 }
             }
         }
@@ -98,7 +96,7 @@ struct SearchView: View {
             isSearchFocused = true
         }
         .task {
-            await hymnalService.loadHymns()
+            await hymnalService.refreshData()
         }
     }
 }

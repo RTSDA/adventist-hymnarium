@@ -15,7 +15,8 @@ struct HymnDetailView: View {
     @State private var showNowPlaying = false
     
     private var isPlaying: Bool {
-        audioService.currentHymnNumber == hymn.number && audioService.isPlaying
+        let isCurrentHymn = audioService.currentHymnNumber == hymn.number
+        return isCurrentHymn && audioService.isPlaying
     }
     
     private var isCurrentHymnal: Bool {
@@ -26,16 +27,50 @@ struct HymnDetailView: View {
         hymnalService.isReadingNumber(hymn.number)
     }
     
+    private var reading: ResponsiveReading? {
+        guard isResponsiveReading else { return nil }
+        return responsiveReadingService.reading(number: hymn.number)
+    }
+    
     var body: some View {
+        mainContent
+            .safeAreaInset(edge: .bottom) {
+                miniPlayer
+            }
+            .navigationBarTitle("# \(hymn.number)", displayMode: .inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    toolbarButtons
+                }
+            }
+            .onAppear {
+                setupInitialState()
+                hymnalService.addToRecentHymns(hymn.number)
+            }
+            .task {
+                await hymnalService.refreshData()
+                if isResponsiveReading {
+                    await responsiveReadingService.loadReadings()
+                }
+            }
+            .sheet(isPresented: $showNowPlaying) {
+                NowPlayingView()
+            }
+            .accentColor(themeManager.accentColor)
+    }
+    
+    private var mainContent: some View {
         Group {
-            if isResponsiveReading,
-               let reading = responsiveReadingService.reading(for: hymn.number) {
+            if let reading = reading {
                 ResponsiveReadingView(reading: reading)
             } else {
                 HymnContentView(hymn: hymn)
             }
         }
-        .safeAreaInset(edge: .bottom) {
+    }
+    
+    private var miniPlayer: some View {
+        Group {
             if audioService.currentHymnNumber != nil {
                 MiniPlayerView()
                     .background(Color(UIColor.systemBackground))
@@ -44,79 +79,59 @@ struct HymnDetailView: View {
                     }
             }
         }
-        .navigationBarTitle("# \(hymn.number)", displayMode: .inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                if !isResponsiveReading {
-                    Button(action: {
-                        Task {
-                            if isPlaying {
-                                await audioService.stop()
-                            } else {
-                                try? await audioService.loadAndPlay(hymnNumber: hymn.number)
-                            }
-                        }
-                    }) {
-                        Image(systemName: isPlaying ? "pause.circle" : "play.circle")
-                            .imageScale(.large)
-                    }
+    }
+    
+    private var toolbarButtons: some View {
+        HStack(spacing: 16) {
+            if isCurrentHymnal && !isResponsiveReading {
+                NavigationLink(destination: SheetMusicView(hymn: hymn)) {
+                    Image(systemName: "music.note.list")
+                        .foregroundColor(themeManager.accentColor)
                 }
             }
             
-            ToolbarItem(placement: .navigationBarTrailing) {
-                HStack(spacing: 16) {
-                    if audioService.isPlaying && audioService.currentHymnNumber == hymn.number {
-                        Button {
+            if !isResponsiveReading {
+                Button(action: {
+                    Task {
+                        if isPlaying {
                             showNowPlaying = true
-                        } label: {
-                            Image(systemName: "music.note")
-                        }
-                    }
-                    
-                    Button {
-                        isFavorite.toggle()
-                        if isResponsiveReading {
-                            if let reading = responsiveReadingService.reading(for: hymn.number) {
-                                Task {
-                                    await responsiveReadingService.toggleFavorite(for: reading)
-                                }
-                            }
                         } else {
-                            favoritesManager.toggleFavorite(hymn.number)
+                            try? await audioService.loadAndPlay(hymnNumber: hymn.number)
                         }
-                    } label: {
-                        Image(systemName: isFavorite ? "heart.fill" : "heart")
                     }
+                }) {
+                    Image(systemName: isPlaying ? "music.note" : "play.circle")
+                        .imageScale(.large)
                 }
             }
             
-            ToolbarItem(placement: .navigationBarTrailing) {
-                if isCurrentHymnal && !isResponsiveReading {
-                    NavigationLink(destination: SheetMusicView(hymn: hymn)) {
-                        Image(systemName: "music.note.list")
-                            .foregroundColor(themeManager.accentColor)
-                    }
+            Button {
+                toggleFavorite()
+            } label: {
+                Image(systemName: isFavorite ? "heart.fill" : "heart")
+            }
+        }
+    }
+    
+    private func setupInitialState() {
+        if isResponsiveReading {
+            isFavorite = responsiveReadingService.favoriteReadings.contains(hymn.number)
+        } else {
+            isFavorite = favoritesManager.isFavorite(hymn.number)
+        }
+    }
+    
+    private func toggleFavorite() {
+        isFavorite.toggle()
+        if isResponsiveReading {
+            if let reading = reading {
+                Task {
+                    await responsiveReadingService.toggleFavorite(reading)
                 }
             }
+        } else {
+            favoritesManager.toggleFavorite(hymn.number)
         }
-        .onAppear {
-            if isResponsiveReading {
-                isFavorite = responsiveReadingService.favoriteReadings.contains(hymn.number)
-            } else {
-                isFavorite = favoritesManager.favorites.contains(hymn.number)
-            }
-            hymnalService.recentHymnsManager.addRecentHymn(hymn.number)
-        }
-        .task {
-            await hymnalService.updateRecentHymns()
-            if isResponsiveReading {
-                await responsiveReadingService.loadReadings()
-            }
-        }
-        .sheet(isPresented: $showNowPlaying) {
-            NowPlayingView()
-        }
-        .accentColor(themeManager.accentColor)
     }
 }
 

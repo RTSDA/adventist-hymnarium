@@ -32,6 +32,7 @@ struct MainTabView: View {
             }
             .tabItem {
                 Label("Number", systemImage: "number")
+                    .environment(\.symbolRenderingMode, .hierarchical)
             }
             .tag(0)
             
@@ -49,6 +50,7 @@ struct MainTabView: View {
             }
             .tabItem {
                 Label("Index", systemImage: "list.bullet")
+                    .environment(\.symbolRenderingMode, .hierarchical)
             }
             .tag(1)
             
@@ -66,6 +68,7 @@ struct MainTabView: View {
             }
             .tabItem {
                 Label("Favorites", systemImage: "heart")
+                    .environment(\.symbolRenderingMode, .hierarchical)
             }
             .tag(2)
             
@@ -83,8 +86,15 @@ struct MainTabView: View {
             }
             .tabItem {
                 Label("Settings", systemImage: "gear")
+                    .environment(\.symbolRenderingMode, .hierarchical)
             }
             .tag(3)
+        }
+        .onAppear {
+            let appearance = UITabBarAppearance()
+            appearance.configureWithDefaultBackground()
+            UITabBar.appearance().scrollEdgeAppearance = appearance
+            UITabBar.appearance().standardAppearance = appearance
         }
     }
 }

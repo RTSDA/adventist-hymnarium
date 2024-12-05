@@ -1,30 +1,37 @@
 import SwiftUI
 
 struct AlphabeticalIndexView: View {
-    @StateObject private var hymnalService = HymnalService.shared
+    @StateObject private var viewModel = IndexViewModel()
     
     var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, spacing: 0) {
-                ForEach(hymnalService.hymns.sorted { $0.title < $1.title }) { hymn in
+        Group {
+            if viewModel.isLoading {
+                ProgressView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else if let error = viewModel.error {
+                ErrorView(error: error)
+            } else {
+                List(viewModel.alphabeticallySortedHymns) { hymn in
                     NavigationLink(destination: HymnDetailView(hymn: hymn)) {
                         HStack {
                             Text("#\(hymn.number)")
                                 .font(AppTheme.standardFont)
                                 .foregroundColor(AppTheme.accentColor)
+                                .frame(width: 50, alignment: .trailing)
                             
                             Text(hymn.title)
                                 .font(AppTheme.standardFont)
-                                .foregroundColor(Color(uiColor: .label))
+                                .foregroundColor(AppTheme.textColor)
                         }
-                        .padding(AppTheme.padding)
-                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    Divider()
                 }
+                .navigationTitle("Alphabetical Index")
+                .navigationBarTitleDisplayMode(.inline)
             }
         }
-        .background(Color(uiColor: .systemBackground))
+        .onAppear {
+            viewModel.loadData()
+        }
     }
 }
 
