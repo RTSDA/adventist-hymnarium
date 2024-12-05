@@ -4,9 +4,13 @@ An iOS application for accessing Seventh-day Adventist hymns and sheet music.
 
 ## Project Structure
 
-This repository contains only the essential project files:
+This repository contains:
 
 - `src/` - Main iOS application source code
+  - `Models/` - Data models for hymns, readings, and app configuration
+  - `Services/` - Core services for hymn and reading management
+  - `Views/` - SwiftUI views for the user interface
+  - `Resources/` - Application resources and assets
 - `adventist-hymnarium-tests/` - Unit tests
 - `adventist-hymnarium-uitests/` - UI tests
 
@@ -25,41 +29,36 @@ The app uses Firebase for analytics, remote configuration, and storage. You'll n
    - Audio files should be organized by hymnal year (e.g. "1985/001.mp3")
    - Sheet music PDFs should follow the same structure (e.g. "1985/001.pdf")
 
-### Data Files
-Place these JSON files in `src/Resources/Assets/`:
-- `new-hymnal-en.json` - Data for the 1985 hymnal
-- `new-hymnal-thematic-list-en.json` - Thematic index for 1985 hymnal
-- `old-hymnal-en.json` - Data for the 1941 hymnal
-- `old-hymnal-thematic-list-en.json` - Thematic index for 1941 hymnal
-- `responsive_readings.json` - Responsive readings
-
-### Utility Scripts
-The `scripts` directory (available separately) contains utilities for:
-- Downloading and processing hymn data
-- Managing sheet music files
-- Fixing file names and permissions
-
 ## Getting Started
 
 1. Clone this repository
-2. Contact the project maintainers to obtain:
-   - Required JSON data files
-   - Utility scripts (if needed for development)
-3. Place the data files in their respective directories as described above
-4. Set up Firebase:
+2. Contact the project maintainers to obtain required resources
+3. Set up Firebase:
    - Create a Firebase project
    - Add your iOS app to the project
    - Download and add `GoogleService-Info.plist`
    - Configure Firebase Storage with proper media files
-5. Open `adventist-hymnarium.xcodeproj` in Xcode
-6. Build and run the project
+4. Open `adventist-hymnarium.xcodeproj` in Xcode
+5. Build and run the project
+
+## Recent Updates
+
+### September 2023
+- Improved service layer efficiency
+  - Optimized HymnalService for better performance
+  - Enhanced ResponsiveReadingService with improved data handling
+- Enhanced UI components and user experience
+  - Refined favorites and history functionality
+  - Improved search capabilities
+  - Updated thematic index features
+- Refactored model structures for better data management
+- General performance improvements and bug fixes
 
 ## Development
 
 This is an iOS application built using Xcode. Make sure you have:
 - Xcode installed
 - Firebase configuration in place
-- All required data files in place
 - Firebase Storage configured with audio and sheet music files
 
 ## License
