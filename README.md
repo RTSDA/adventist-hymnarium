@@ -18,16 +18,18 @@ This repository contains:
 
 The application requires additional resources that are not tracked in the repository. These must be obtained separately:
 
+### Cloud Storage
+The app requires cloud storage for hymn audio and sheet music files. You can use any cloud storage provider (e.g., Cloudflare R2, AWS S3, etc.). Files should be organized as follows:
+- Audio files by hymnal year (e.g. "1985/001.mp3")
+- Sheet music PDFs following the same structure (e.g. "1985/001.pdf")
+
 ### Firebase Configuration
-The app uses Firebase for analytics, remote configuration, and storage. You'll need to:
+The app uses Firebase for analytics and remote configuration. You'll need to:
 1. Create a Firebase project at [Firebase Console](https://console.firebase.google.com)
 2. Add an iOS app to your Firebase project
 3. Download the `GoogleService-Info.plist` configuration file
 4. Place it in the project root directory
    - Note: A template file `GoogleService-Info.template.plist` is provided as reference
-5. Set up Firebase Storage for hymn audio and sheet music files
-   - Audio files should be organized by hymnal year (e.g. "1985/001.mp3")
-   - Sheet music PDFs should follow the same structure (e.g. "1985/001.pdf")
 
 ## Getting Started
 
@@ -37,7 +39,6 @@ The app uses Firebase for analytics, remote configuration, and storage. You'll n
    - Create a Firebase project
    - Add your iOS app to the project
    - Download and add `GoogleService-Info.plist`
-   - Configure Firebase Storage with proper media files
 4. Open `adventist-hymnarium.xcodeproj` in Xcode
 5. Build and run the project
 
@@ -59,7 +60,7 @@ The app uses Firebase for analytics, remote configuration, and storage. You'll n
 This is an iOS application built using Xcode. Make sure you have:
 - Xcode installed
 - Firebase configuration in place
-- Firebase Storage configured with audio and sheet music files
+- Cloud storage configured with audio and sheet music files
 
 ## License
 
