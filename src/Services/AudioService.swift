@@ -10,7 +10,6 @@ import AVFoundation
 import MediaPlayer
 import Combine
 import UIKit
-import FirebaseRemoteConfig
 
 final class AudioService: NSObject, ObservableObject {
     // MARK: - Singleton
@@ -31,13 +30,15 @@ final class AudioService: NSObject, ObservableObject {
     @Published var duration: TimeInterval = 0
     @Published var isPlaying: Bool = false
     
-    private let cloudStorage = CloudStorageService.shared
+    private let Storage = StorageService.shared
     private let cacheService = CacheService.shared
     private let cacheDirectory = "audio_cache"
     private let maxCacheSize: Int64 = 100 * 1024 * 1024  // 100 MB
     private let hymnalService = HymnalService.shared
     
     private let fileManager = FileManager.default
+    
+    private var completionHandler: (() -> Void)?
     
     // MARK: - Initialization
     
@@ -161,7 +162,7 @@ final class AudioService: NSObject, ObservableObject {
                 print("Using cached audio data for hymn \(hymnNumber) in \(isOldHymnal ? "1941" : "1985") hymnal")
             } else {
                 // Download from R2 if not in cache
-                audioData = try await cloudStorage.downloadAsset(path: filename)
+                audioData = try await Storage.downloadAsset(path: filename)
                 print("Downloaded audio data size: \(audioData.count) bytes")
                 
                 // Store in cache
@@ -200,7 +201,9 @@ final class AudioService: NSObject, ObservableObject {
                     if let urlAsset = playerItem.asset as? AVURLAsset {
                         try? FileManager.default.removeItem(at: urlAsset.url)
                     }
+                    self?.currentHymnNumber = nil
                     self?.updateNowPlaying()
+                    self?.completionHandler?()
                 }
             }
             
@@ -277,5 +280,17 @@ final class AudioService: NSObject, ObservableObject {
         Task {
             try? await loadAndPlay(hymnNumber: hymnNumber)
         }
+    }
+    
+    // MARK: - Completion Handler
+    
+    @MainActor
+    func setCompletionHandler(_ handler: @escaping () -> Void) {
+        completionHandler = handler
+    }
+    
+    @MainActor
+    func clearCompletionHandler() {
+        completionHandler = nil
     }
 }

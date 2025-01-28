@@ -27,7 +27,7 @@ final class SheetMusicService: ObservableObject {
     @Published private(set) var error: Error?
     
     private let cacheService = CacheService.shared
-    private let cloudStorage = CloudStorageService.shared
+    private let storage = StorageService.shared
     private let cacheDirectory = "sheet-music"
     private let maxCacheSize: Int64 = 200 * 1024 * 1024  // 200MB limit for sheet music
     
@@ -79,7 +79,7 @@ final class SheetMusicService: ObservableObject {
                 print("Retrieved main page from cache, size: \(imageData.count) bytes")
             } else {
                 // Download from R2 if not in cache
-                imageData = try await cloudStorage.downloadAsset(path: "\(baseFilename).png")
+                imageData = try await storage.downloadAsset(path: "\(baseFilename).png")
                 print("Downloaded main page, size: \(imageData.count) bytes")
                 // Store in cache
                 try? cacheService.store(imageData, forKey: cacheKey, inDirectory: cacheDirectory)
@@ -105,7 +105,7 @@ final class SheetMusicService: ObservableObject {
                         print("Retrieved page \(page) from cache, size: \(pageData.count) bytes")
                     } else {
                         // Download if not in cache
-                        pageData = try await cloudStorage.downloadAsset(path: "\(baseFilename)_\(page).png")
+                        pageData = try await storage.downloadAsset(path: "\(baseFilename)_\(page).png")
                         print("Downloaded page \(page), size: \(pageData.count) bytes")
                         // Store in cache
                         try? cacheService.store(pageData, forKey: pageCacheKey, inDirectory: cacheDirectory)

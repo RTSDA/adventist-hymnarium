@@ -6,8 +6,14 @@ struct SearchView: View {
     @State private var searchText = ""
     @FocusState private var isSearchFocused: Bool
     
+    private func normalizeText(_ text: String) -> String {
+        text.replacingOccurrences(of: ",", with: "").trimmingCharacters(in: .whitespaces)
+    }
+    
     var filteredHymns: [Hymn] {
         guard !searchText.isEmpty else { return [] }
+        
+        let normalizedSearchText = normalizeText(searchText)
         
         return hymnalService.hymns.filter { hymn in
             // Check hymn number
@@ -17,7 +23,8 @@ struct SearchView: View {
             }
             
             // Check title
-            if hymn.title.localizedCaseInsensitiveContains(searchText) {
+            let normalizedTitle = normalizeText(hymn.title)
+            if normalizedTitle.localizedCaseInsensitiveContains(normalizedSearchText) {
                 return true
             }
             

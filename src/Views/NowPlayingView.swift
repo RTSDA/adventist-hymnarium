@@ -68,6 +68,16 @@ struct NowPlayingView: View {
             .padding(.vertical)
             .navigationBarTitleDisplayMode(.inline)
         }
+        .onAppear {
+            // Set up completion handler to dismiss when playback ends
+            audioService.setCompletionHandler {
+                dismiss()
+            }
+        }
+        .onDisappear {
+            // Clean up completion handler
+            audioService.clearCompletionHandler()
+        }
     }
     
     private func formatTime(_ time: TimeInterval) -> String {

@@ -24,11 +24,9 @@
 		EA10AF992CFF9F41000BA431 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF702CFF9F41000BA431 /* HistoryView.swift */; };
 		EA10AF9A2CFF9F41000BA431 /* ResponsiveReadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF7D2CFF9F41000BA431 /* ResponsiveReadingView.swift */; };
 		EA10AF9B2CFF9F41000BA431 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF7F2CFF9F41000BA431 /* SettingsView.swift */; };
-		EA10AF9C2CFF9F41000BA431 /* SDA_HymnalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF892CFF9F41000BA431 /* SDA_HymnalApp.swift */; };
 		EA10AF9D2CFF9F41000BA431 /* Bundle+DisplayName.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF4A2CFF9F41000BA431 /* Bundle+DisplayName.swift */; };
 		EA10AF9E2CFF9F41000BA431 /* AudioSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF6B2CFF9F41000BA431 /* AudioSettingsView.swift */; };
 		EA10AF9F2CFF9F41000BA431 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF632CFF9F41000BA431 /* AppTheme.swift */; };
-		EA10AFA02CFF9F41000BA431 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF872CFF9F41000BA431 /* ContentView.swift */; };
 		EA10AFA12CFF9F41000BA431 /* HymnalLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF4E2CFF9F41000BA431 /* HymnalLanguage.swift */; };
 		EA10AFA22CFF9F41000BA431 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF772CFF9F41000BA431 /* MainTabView.swift */; };
 		EA10AFA32CFF9F41000BA431 /* HymnalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AF5D2CFF9F41000BA431 /* HymnalService.swift */; };
@@ -56,10 +54,6 @@
 		EA10AFBE2CFF9F41000BA431 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF862CFF9F41000BA431 /* Assets.xcassets */; };
 		EA10AFBF2CFF9F41000BA431 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF532CFF9F41000BA431 /* Preview Assets.xcassets */; };
 		EA10AFC02CFF9F41000BA431 /* MainTabView.swift.bak in Resources */ = {isa = PBXBuildFile; fileRef = EA10AF782CFF9F41000BA431 /* MainTabView.swift.bak */; };
-		EA10AFC32CFFD935000BA431 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EA10AFC22CFFD935000BA431 /* FirebaseAnalytics */; };
-		EA10AFC52CFFD935000BA431 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = EA10AFC42CFFD935000BA431 /* FirebaseRemoteConfig */; };
-		EA10AFC72CFFD9BF000BA431 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA10AFC62CFFD9BF000BA431 /* GoogleService-Info.plist */; };
-		EA10AFC92CFFDA7F000BA431 /* CloudStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFC82CFFDA7F000BA431 /* CloudStorageService.swift */; };
 		EA10AFCB2CFFE13B000BA431 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFCA2CFFE13B000BA431 /* CacheService.swift */; };
 		EA10AFCD2CFFF560000BA431 /* LyricsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFCC2CFFF560000BA431 /* LyricsView.swift */; };
 		EA10AFCF2D00F345000BA431 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFCE2D00F345000BA431 /* DataService.swift */; };
@@ -71,6 +65,8 @@
 		EA10AFDC2D012210000BA431 /* ThematicListDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFDB2D012210000BA431 /* ThematicListDetailView.swift */; };
 		EA10AFE12D0127CD000BA431 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA10AFE02D0127CD000BA431 /* ErrorView.swift */; };
 		EA10AFE52D013864000BA431 /* hymnarium.db in Resources */ = {isa = PBXBuildFile; fileRef = EA10AFE42D013864000BA431 /* hymnarium.db */; };
+		EACA369B2D48819C000FF97B /* AdventistHymnariumApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACA369A2D48819C000FF97B /* AdventistHymnariumApp.swift */; };
+		EACA36A32D488514000FF97B /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACA36A22D488514000FF97B /* StorageService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,11 +141,7 @@
 		EA10AF832CFF9F41000BA431 /* ThematicIndexContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThematicIndexContent.swift; sourceTree = "<group>"; };
 		EA10AF842CFF9F41000BA431 /* ThematicListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThematicListView.swift; sourceTree = "<group>"; };
 		EA10AF862CFF9F41000BA431 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		EA10AF872CFF9F41000BA431 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EA10AF882CFF9F41000BA431 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		EA10AF892CFF9F41000BA431 /* SDA_HymnalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDA_HymnalApp.swift; sourceTree = "<group>"; };
-		EA10AFC62CFFD9BF000BA431 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		EA10AFC82CFFDA7F000BA431 /* CloudStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStorageService.swift; sourceTree = "<group>"; };
 		EA10AFCA2CFFE13B000BA431 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		EA10AFCC2CFFF560000BA431 /* LyricsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyricsView.swift; sourceTree = "<group>"; };
 		EA10AFCE2D00F345000BA431 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
@@ -161,6 +153,8 @@
 		EA10AFDB2D012210000BA431 /* ThematicListDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThematicListDetailView.swift; sourceTree = "<group>"; };
 		EA10AFE02D0127CD000BA431 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		EA10AFE42D013864000BA431 /* hymnarium.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = hymnarium.db; path = src/Resources/hymnarium.db; sourceTree = "<group>"; };
+		EACA369A2D48819C000FF97B /* AdventistHymnariumApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventistHymnariumApp.swift; sourceTree = "<group>"; };
+		EACA36A22D488514000FF97B /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,8 +162,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA10AFC32CFFD935000BA431 /* FirebaseAnalytics in Frameworks */,
-				EA10AFC52CFFD935000BA431 /* FirebaseRemoteConfig in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,7 +187,6 @@
 			children = (
 				EA10AF8A2CFF9F41000BA431 /* src */,
 				EA0B9CBF2CF94DFA00CD75C8 /* Products */,
-				EA10AFC62CFFD9BF000BA431 /* GoogleService-Info.plist */,
 				EA10AFE42D013864000BA431 /* hymnarium.db */,
 			);
 			sourceTree = "<group>";
@@ -274,10 +265,10 @@
 				EA10AF5C2CFF9F41000BA431 /* AudioService.swift */,
 				EA10AF5D2CFF9F41000BA431 /* HymnalService.swift */,
 				EA10AF5E2CFF9F41000BA431 /* PDFService.swift */,
+				EACA36A22D488514000FF97B /* StorageService.swift */,
 				EA10AF5F2CFF9F41000BA431 /* ResponsiveReadingService.swift */,
 				EA10AF602CFF9F41000BA431 /* ScreenService.swift */,
 				EA10AF612CFF9F41000BA431 /* SheetMusicService.swift */,
-				EA10AFC82CFFDA7F000BA431 /* CloudStorageService.swift */,
 				EA10AFCA2CFFE13B000BA431 /* CacheService.swift */,
 				EA10AFCE2D00F345000BA431 /* DataService.swift */,
 				EA10AFD02D00F357000BA431 /* DatabaseService.swift */,
@@ -371,9 +362,8 @@
 				EA10AF652CFF9F41000BA431 /* Theme */,
 				EA10AF852CFF9F41000BA431 /* Views */,
 				EA10AF862CFF9F41000BA431 /* Assets.xcassets */,
-				EA10AF872CFF9F41000BA431 /* ContentView.swift */,
 				EA10AF882CFF9F41000BA431 /* Launch Screen.storyboard */,
-				EA10AF892CFF9F41000BA431 /* SDA_HymnalApp.swift */,
+				EACA369A2D48819C000FF97B /* AdventistHymnariumApp.swift */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -412,8 +402,6 @@
 			);
 			name = "Adventist Hymnarium";
 			packageProductDependencies = (
-				EA10AFC22CFFD935000BA431 /* FirebaseAnalytics */,
-				EA10AFC42CFFD935000BA431 /* FirebaseRemoteConfig */,
 			);
 			productName = "SDA Hymnal";
 			productReference = EA0B9CBE2CF94DFA00CD75C8 /* Adventist Hymnarium.app */;
@@ -492,7 +480,6 @@
 			mainGroup = EA0B9CB52CF94DFA00CD75C8;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				EA10AFC12CFFD935000BA431 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EA0B9CBF2CF94DFA00CD75C8 /* Products */;
@@ -514,7 +501,6 @@
 				EA10AFBD2CFF9F41000BA431 /* Launch Screen.storyboard in Resources */,
 				EA10AFBE2CFF9F41000BA431 /* Assets.xcassets in Resources */,
 				EA10AFE52D013864000BA431 /* hymnarium.db in Resources */,
-				EA10AFC72CFFD9BF000BA431 /* GoogleService-Info.plist in Resources */,
 				EA10AFBF2CFF9F41000BA431 /* Preview Assets.xcassets in Resources */,
 				EA10AFC02CFF9F41000BA431 /* MainTabView.swift.bak in Resources */,
 			);
@@ -545,15 +531,16 @@
 				EA10AF8B2CFF9F41000BA431 /* AlphabeticalIndexView.swift in Sources */,
 				EA10AF8C2CFF9F41000BA431 /* Hymn.swift in Sources */,
 				EA10AF8D2CFF9F41000BA431 /* SearchView.swift in Sources */,
-				EA10AFC92CFFDA7F000BA431 /* CloudStorageService.swift in Sources */,
 				EA10AF8E2CFF9F41000BA431 /* NumberPadView.swift in Sources */,
 				EA10AF8F2CFF9F41000BA431 /* HymnSheet.swift in Sources */,
 				EA10AFD12D00F357000BA431 /* DatabaseService.swift in Sources */,
 				EA10AF902CFF9F41000BA431 /* AppDefaults.swift in Sources */,
 				EA10AF912CFF9F41000BA431 /* ScreenService.swift in Sources */,
+				EACA369B2D48819C000FF97B /* AdventistHymnariumApp.swift in Sources */,
 				EA10AFCF2D00F345000BA431 /* DataService.swift in Sources */,
 				EA10AF922CFF9F41000BA431 /* FavoritesView.swift in Sources */,
 				EA10AF932CFF9F41000BA431 /* FavoriteReadingsView.swift in Sources */,
+				EACA36A32D488514000FF97B /* StorageService.swift in Sources */,
 				EA10AF942CFF9F41000BA431 /* NumericalIndexView.swift in Sources */,
 				EA10AF952CFF9F41000BA431 /* AppIconPreviewView.swift in Sources */,
 				EA10AF962CFF9F41000BA431 /* SheetMusicService.swift in Sources */,
@@ -562,11 +549,9 @@
 				EA10AF992CFF9F41000BA431 /* HistoryView.swift in Sources */,
 				EA10AF9A2CFF9F41000BA431 /* ResponsiveReadingView.swift in Sources */,
 				EA10AF9B2CFF9F41000BA431 /* SettingsView.swift in Sources */,
-				EA10AF9C2CFF9F41000BA431 /* SDA_HymnalApp.swift in Sources */,
 				EA10AF9D2CFF9F41000BA431 /* Bundle+DisplayName.swift in Sources */,
 				EA10AF9E2CFF9F41000BA431 /* AudioSettingsView.swift in Sources */,
 				EA10AF9F2CFF9F41000BA431 /* AppTheme.swift in Sources */,
-				EA10AFA02CFF9F41000BA431 /* ContentView.swift in Sources */,
 				EA10AFA12CFF9F41000BA431 /* HymnalLanguage.swift in Sources */,
 				EA10AFA22CFF9F41000BA431 /* MainTabView.swift in Sources */,
 				EA10AFA32CFF9F41000BA431 /* HymnalService.swift in Sources */,
@@ -925,30 +910,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		EA10AFC12CFFD935000BA431 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 11.6.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		EA10AFC22CFFD935000BA431 /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EA10AFC12CFFD935000BA431 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		EA10AFC42CFFD935000BA431 /* FirebaseRemoteConfig */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EA10AFC12CFFD935000BA431 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseRemoteConfig;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EA0B9CB62CF94DFA00CD75C8 /* Project object */;
 }
