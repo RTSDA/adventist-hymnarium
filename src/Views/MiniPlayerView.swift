@@ -3,6 +3,7 @@ import AVFoundation
 
 struct MiniPlayerView: View {
     @ObservedObject private var audioService = AudioService.shared
+    @ObservedObject private var hymnalService = HymnalService.shared
     @State private var showNowPlaying = false
     @State private var offset: CGFloat = 0
     
@@ -65,6 +66,12 @@ struct MiniPlayerView: View {
             .frame(height: 56)
             .sheet(isPresented: $showNowPlaying) {
                 NowPlayingView()
+            }
+            .onChange(of: hymnalService.currentLanguage) { oldValue, newValue in
+                // Stop playback when hymnal type changes
+                Task {
+                    await audioService.stop()
+                }
             }
             .gesture(
                 DragGesture()

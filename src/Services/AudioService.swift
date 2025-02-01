@@ -147,8 +147,8 @@ final class AudioService: NSObject, ObservableObject {
             // For 1941 hymnal: audio/1985/1941/xxx.mp3
             // For 1985 hymnal: audio/1985/1985/en_xxx.mp3
             let filename = isOldHymnal 
-                ? "audio/1985/1941/\(numberString).mp3"
-                : "audio/1985/1985/en_\(numberString).mp3"
+                ? "audio/1941/\(numberString).mp3"
+                : "audio/1985/en_\(numberString).mp3"
             
             let cacheKey = isOldHymnal 
                 ? "1941_\(numberString).mp3"
@@ -277,6 +277,19 @@ final class AudioService: NSObject, ObservableObject {
     
     @objc private func handleHymnalServiceNotification(_ notification: Notification) {
         guard let hymnNumber = notification.userInfo?["hymnNumber"] as? Int else { return }
+        
+        // If hymnal type changed
+        if let oldHymnalType = notification.userInfo?["oldHymnalType"] as? Bool,
+           let newHymnalType = notification.userInfo?["newHymnalType"] as? Bool,
+           oldHymnalType != newHymnalType {
+            Task { @MainActor in
+                // Stop any playback and reset
+                await stop()
+            }
+            return
+        }
+        
+        // Only auto-play if it's just a hymn number change
         Task {
             try? await loadAndPlay(hymnNumber: hymnNumber)
         }

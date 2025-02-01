@@ -3,6 +3,7 @@ import AVFoundation
 
 struct NowPlayingView: View {
     @ObservedObject private var audioService = AudioService.shared
+    @ObservedObject private var hymnalService = HymnalService.shared
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -67,6 +68,10 @@ struct NowPlayingView: View {
             }
             .padding(.vertical)
             .navigationBarTitleDisplayMode(.inline)
+        }
+        .onChange(of: hymnalService.currentLanguage) { oldValue, NewValue in
+            // Dismiss when hymnal type changes
+            dismiss()
         }
         .onAppear {
             // Set up completion handler to dismiss when playback ends

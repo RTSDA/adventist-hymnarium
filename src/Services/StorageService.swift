@@ -1,27 +1,5 @@
 import Foundation
 
-public struct Config: Codable {
-    public let apiKeys: APIKeys
-    
-    public init(apiKeys: APIKeys) {
-        self.apiKeys = apiKeys
-    }
-}
-
-public struct APIKeys: Codable {
-    public let r2AccessKeyId: String
-    public let r2SecretAccessKey: String
-    public let r2Endpoint: String
-    public let r2Bucket: String
-    
-    public init(r2AccessKeyId: String, r2SecretAccessKey: String, r2Endpoint: String, r2Bucket: String) {
-        self.r2AccessKeyId = r2AccessKeyId
-        self.r2SecretAccessKey = r2SecretAccessKey
-        self.r2Endpoint = r2Endpoint
-        self.r2Bucket = r2Bucket
-    }
-}
-
 @MainActor
 public final class StorageService: ObservableObject {
     public static let shared = StorageService()
@@ -29,48 +7,50 @@ public final class StorageService: ObservableObject {
     @Published public private(set) var isLoading = false
     @Published public private(set) var error: Error?
     
-    private var config: Config?
-    private let baseURL = "https://pocketbase.hymnarium.app/api/collections/config/records"
+    private let baseURL = "https://adventisthymnarium.rockvilletollandsda.church"
     
-    private init() {
-        Task {
-            await loadConfig()
-        }
-    }
-    
-    private func loadConfig() async {
-        do {
-            let url = URL(string: baseURL)!
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let response = try JSONDecoder().decode(PocketBaseResponse.self, from: data)
-            if let config = response.items.first {
-                self.config = config
-            }
-        } catch {
-            self.error = error
-        }
-    }
+    private init() {}
     
     public func downloadAsset(path: String) async throws -> Data {
-        guard let config = config else {
-            throw NSError(domain: "StorageService", code: -1, userInfo: [NSLocalizedDescriptionKey: "Configuration not loaded"])
+        // Clean up any double slashes in the path
+        let cleanPath = path.replacingOccurrences(of: "//", with: "/")
+        guard let url = URL(string: "\(baseURL)/\(cleanPath)") else {
+            throw NSError(domain: "StorageService", code: -1, 
+                         userInfo: [NSLocalizedDescriptionKey: "Invalid URL path"])
         }
         
-        let url = URL(string: "\(config.apiKeys.r2Endpoint)/\(config.apiKeys.r2Bucket)/\(path)")!
-        let (data, _) = try await URLSession.shared.data(from: url)
-        return data
+        print("Downloading from URL: \(url.absoluteString)")
+        
+        var request = URLRequest(url: url)
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw NSError(domain: "StorageService", code: -1, 
+                            userInfo: [NSLocalizedDescriptionKey: "Invalid response"])
+            }
+            
+            guard httpResponse.statusCode == 200 else {
+                var errorMessage = "Failed to download asset: \(httpResponse.statusCode)"
+                if let errorString = String(data: data, encoding: .utf8) {
+                    errorMessage += " - \(errorString)"
+                }
+                throw NSError(domain: "StorageService", code: httpResponse.statusCode, 
+                            userInfo: [NSLocalizedDescriptionKey: errorMessage])
+            }
+            
+            return data
+        } catch {
+            print("Network error: \(error.localizedDescription)")
+            throw NSError(domain: "StorageService", code: -1, 
+                         userInfo: [NSLocalizedDescriptionKey: "Failed to download asset: \(error.localizedDescription)"])
+        }
     }
     
     public func getAssetURL(path: String) -> URL? {
-        guard let config = config else { return nil }
-        return URL(string: "\(config.apiKeys.r2Endpoint)/\(config.apiKeys.r2Bucket)/\(path)")
-    }
-}
-
-public struct PocketBaseResponse: Codable {
-    public let items: [Config]
-    
-    public init(items: [Config]) {
-        self.items = items
+        let cleanPath = path.replacingOccurrences(of: "//", with: "/")
+        return URL(string: "\(baseURL)/\(cleanPath)")
     }
 } 

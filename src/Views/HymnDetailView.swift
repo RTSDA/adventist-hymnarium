@@ -7,11 +7,11 @@ struct HymnDetailView: View {
     @StateObject private var themeManager = ThemeManager.shared
     @StateObject private var responsiveReadingService = ResponsiveReadingService.shared
     @StateObject private var favoritesManager = FavoritesManager.shared
+    @Environment(\.dismiss) private var dismiss
     let hymn: Hymn
     @State private var isFavorite = false
     @AppStorage("fontSize") private var fontSize: Double = AppDefaults.defaultFontSize
     @AppStorage("showVerseNumbers") private var showVerseNumbers = true
-    @Environment(\.presentationMode) var presentationMode
     @State private var showNowPlaying = false
     
     private var isPlaying: Bool {
@@ -46,6 +46,10 @@ struct HymnDetailView: View {
             .onAppear {
                 setupInitialState()
                 hymnalService.addToRecentHymns(hymn.number)
+            }
+            .onChange(of: hymnalService.currentLanguage) { oldValue, newValue in
+                // Dismiss view when hymnal type changes
+                dismiss()
             }
             .task {
                 await hymnalService.refreshData()

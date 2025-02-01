@@ -7,36 +7,81 @@ struct SearchView: View {
     @FocusState private var isSearchFocused: Bool
     
     private func normalizeText(_ text: String) -> String {
-        text.replacingOccurrences(of: ",", with: "").trimmingCharacters(in: .whitespaces)
+        text.lowercased()
+           .replacingOccurrences(of: ",", with: "")
+           .replacingOccurrences(of: ".", with: "")
+           .trimmingCharacters(in: .whitespaces)
+    }
+    
+    private func splitSearchTerms(_ text: String) -> [String] {
+        normalizeText(text)
+            .components(separatedBy: .whitespaces)
+            .filter { !$0.isEmpty }
+    }
+    
+    private func matchScore(hymn: Hymn, searchTerms: [String]) -> Int {
+        guard !searchTerms.isEmpty else { return 0 }
+        
+        var score = 0
+        let normalizedTitle = normalizeText(hymn.title)
+        let normalizedVerses = hymn.verses.map { normalizeText($0) }
+        
+        // Check hymn number
+        if searchTerms.contains(where: { hymn.number.description == $0 }) {
+            score += 100  // High score for exact number match
+        }
+        
+        for term in searchTerms {
+            // Title matches (weighted heavily)
+            if normalizedTitle.contains(term) {
+                score += 50
+            }
+            
+            // Word boundary matches in title (weighted very heavily)
+            let titleWords = normalizedTitle.components(separatedBy: .whitespaces)
+            if titleWords.contains(term) {
+                score += 75
+            }
+            
+            // Partial word matches in title
+            if titleWords.contains(where: { $0.contains(term) }) {
+                score += 25
+            }
+            
+            // Verse matches
+            for verse in normalizedVerses {
+                if verse.contains(term) {
+                    score += 10
+                }
+                
+                // Word boundary matches in verses
+                let verseWords = verse.components(separatedBy: .whitespaces)
+                if verseWords.contains(term) {
+                    score += 15
+                }
+            }
+        }
+        
+        return score
     }
     
     var filteredHymns: [Hymn] {
         guard !searchText.isEmpty else { return [] }
         
-        let normalizedSearchText = normalizeText(searchText)
+        let searchTerms = splitSearchTerms(searchText)
+        guard !searchTerms.isEmpty else { return [] }
         
-        return hymnalService.hymns.filter { hymn in
-            // Check hymn number
-            if let searchNumber = Int(searchText),
-               hymn.number == searchNumber {
-                return true
-            }
-            
-            // Check title
-            let normalizedTitle = normalizeText(hymn.title)
-            if normalizedTitle.localizedCaseInsensitiveContains(normalizedSearchText) {
-                return true
-            }
-            
-            // Check verses
-            for verse in hymn.verses {
-                if verse.localizedCaseInsensitiveContains(searchText) {
-                    return true
-                }
-            }
-            
-            return false
+        // Get all hymns with a non-zero match score
+        let scoredHymns = hymnalService.hymns.map { hymn -> (hymn: Hymn, score: Int) in
+            let score = matchScore(hymn: hymn, searchTerms: searchTerms)
+            return (hymn, score)
         }
+        .filter { $0.score > 0 }
+        
+        // Sort by score (highest first) and map back to hymns
+        return scoredHymns
+            .sorted { $0.score > $1.score }
+            .map { $0.hymn }
     }
     
     var body: some View {

@@ -6,6 +6,7 @@
 !README.md
 !LICENSE
 !src/
+!src/**/*.swift
 !adventist-hymnarium-tests/
 !adventist-hymnarium-uitests/
 
