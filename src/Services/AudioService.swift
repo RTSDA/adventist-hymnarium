@@ -11,10 +11,10 @@ import MediaPlayer
 import Combine
 import UIKit
 
-final class AudioService: NSObject, ObservableObject {
+@MainActor
+final class AudioService: NSObject, ObservableObject, @unchecked Sendable {
     // MARK: - Singleton
     
-    @MainActor
     static let shared = AudioService()
     
     // MARK: - Properties
@@ -61,7 +61,7 @@ final class AudioService: NSObject, ObservableObject {
         
         commandCenter.playCommand.addTarget { [weak self] event in
             guard let self = self else { return .commandFailed }
-            if let number = self.currentHymnNumber {
+            if self.currentHymnNumber != nil {
                 Task {
                     try? await self.play()
                 }
@@ -73,7 +73,7 @@ final class AudioService: NSObject, ObservableObject {
         commandCenter.pauseCommand.addTarget { [weak self] event in
             guard let self = self else { return .commandFailed }
             Task {
-                await self.pause()
+                self.pause()
             }
             return .success
         }
@@ -90,8 +90,8 @@ final class AudioService: NSObject, ObservableObject {
             guard let self = self else { return .commandFailed }
             Task {
                 if self.isPlaying {
-                    await self.pause()
-                } else if let number = self.currentHymnNumber {
+                    self.pause()
+                } else if self.currentHymnNumber != nil {
                     try? await self.play()
                 }
             }
@@ -241,8 +241,71 @@ final class AudioService: NSObject, ObservableObject {
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
             try AVAudioSession.sharedInstance().setActive(true)
+            
+            // Observe audio session interruptions
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(handleAudioSessionInterruption),
+                name: AVAudioSession.interruptionNotification,
+                object: nil
+            )
+            
+            // Observe audio route changes (e.g., headphones disconnected)
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(handleAudioRouteChange),
+                name: AVAudioSession.routeChangeNotification,
+                object: nil
+            )
         } catch {
             print("Failed to set up audio session: \(error)")
+        }
+    }
+    
+    @objc private func handleAudioSessionInterruption(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
+            return
+        }
+        
+        Task { @MainActor in
+            switch type {
+            case .began:
+                // Audio was interrupted (e.g., by a phone call or another app)
+                pause()
+                
+            case .ended:
+                // Interruption ended
+                if let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt {
+                    let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
+                    if options.contains(.shouldResume) {
+                        // Only auto-resume if the interruption options indicate we should
+                        try? await play()
+                    }
+                }
+                
+            @unknown default:
+                break
+            }
+        }
+    }
+    
+    @objc private func handleAudioRouteChange(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
+              let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue) else {
+            return
+        }
+        
+        Task { @MainActor in
+            switch reason {
+            case .oldDeviceUnavailable:
+                // For example, headphones were unplugged
+                pause()
+            default:
+                break
+            }
         }
     }
     

@@ -130,7 +130,7 @@ struct HymnDetailView: View {
         if isResponsiveReading {
             if let reading = reading {
                 Task {
-                    await responsiveReadingService.toggleFavorite(reading)
+                     responsiveReadingService.toggleFavorite(reading)
                 }
             }
         } else {

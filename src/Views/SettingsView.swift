@@ -12,6 +12,8 @@ struct SettingsView: View {
     @State private var showingHelp = false
     @State private var showFavoritesAlert = false
     @State private var showRecentHymnsAlert = false
+    @State private var showDatabaseUpdateAlert = false
+    @State private var isDatabaseUpdating = false
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
     var body: some View {
@@ -155,7 +157,7 @@ struct SettingsView: View {
                     Button("Cancel", role: .cancel) { }
                     Button("Clear", role: .destructive) {
                         Task {
-                            await hymnalService.clearRecentHymns()
+                            hymnalService.clearRecentHymns()
                         }
                     }
                 } message: {
@@ -180,16 +182,78 @@ struct SettingsView: View {
                     Button("Cancel", role: .cancel) { }
                     Button("Clear", role: .destructive) {
                         Task {
-                            await FavoritesManager.shared.clearFavorites()
-                            await ResponsiveReadingService.shared.clearFavorites()
+                             FavoritesManager.shared.clearFavorites()
+                             ResponsiveReadingService.shared.clearFavorites()
                         }
                     }
                 } message: {
                     Text("This will remove all hymns and readings from your favorites.")
                 }
+                
+                Button {
+                    showDatabaseUpdateAlert = true
+                } label: {
+                    HStack {
+                        Text("Update Hymnal Database")
+                            .scaledFont(.headline)
+                        if isDatabaseUpdating {
+                            ProgressView()
+                                .padding(.leading, 5)
+                        }
+                    }
+                }
+                .foregroundColor(.blue)
+                .disabled(isDatabaseUpdating)
+                .alert("Update Hymnal Database?", isPresented: $showDatabaseUpdateAlert) {
+                    Button("Cancel", role: .cancel) { }
+                    Button("Update", role: .destructive) {
+                        Task {
+                            isDatabaseUpdating = true
+                            await hymnalService.forceUpdateDatabase()
+                            isDatabaseUpdating = false
+                        }
+                    }
+                } message: {
+                    Text("This will update the hymnal database to the latest version. Any database issues should be fixed after this update.")
+                }
+                
+                databaseUpdateInfo
             }
             .padding()
         }
+    }
+    
+    private var databaseUpdateInfo: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            if let timestamp = UserDefaults.standard.object(forKey: "database_last_updated") as? Double {
+                let dateString = formatTimestamp(timestamp)
+                HStack {
+                    Text("Database Last Updated")
+                        .scaledFont(.headline)
+                    Spacer()
+                    Text(dateString)
+                        .scaledFont(.body)
+                        .foregroundColor(.secondary)
+                }
+            }
+            
+            HStack {
+                Text("Database Status")
+                    .scaledFont(.headline)
+                Spacer()
+                Text("Up to Date")
+                    .scaledFont(.body)
+                    .foregroundColor(.green)
+            }
+        }
+    }
+    
+    private func formatTimestamp(_ timestamp: Double) -> String {
+        let date = Date(timeIntervalSince1970: timestamp)
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        return formatter.string(from: date)
     }
     
     private var aboutSection: some View {

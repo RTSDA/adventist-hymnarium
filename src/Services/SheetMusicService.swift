@@ -18,7 +18,8 @@ final class ImageContainer {
     }
 }
 
-final class SheetMusicService: ObservableObject {
+@MainActor
+final class SheetMusicService: ObservableObject, @unchecked Sendable {
     static let shared = SheetMusicService()
     
     @Published private(set) var currentSheetMusic: [UIImage]?
@@ -142,7 +143,7 @@ final class SheetMusicService: ObservableObject {
     func sheetMusicExists(for hymnNumber: Int) -> Bool {
         // Format the hymn number with leading zeros
         let numberString = String(format: "%03d", hymnNumber)
-        let path = "sheet-music/1985/PianoSheet_NewHymnal_en_\(numberString).png"
+        _ = "sheet-music/1985/PianoSheet_NewHymnal_en_\(numberString).png"
         
         // We'll consider it exists if we can construct a valid URL
         // The actual existence will be checked when downloading

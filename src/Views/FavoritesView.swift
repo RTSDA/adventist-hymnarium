@@ -30,7 +30,7 @@ class FavoritesManager: ObservableObject {
     
     private func setupLanguageObserver() {
         Task { @MainActor in
-            for await language in hymnalService.$currentLanguage.values {
+            for await _ in hymnalService.$currentLanguage.values {
                 loadFavorites()
             }
         }

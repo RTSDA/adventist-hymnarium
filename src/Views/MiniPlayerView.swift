@@ -38,7 +38,7 @@ struct MiniPlayerView: View {
                 Button {
                     Task {
                         if audioService.isPlaying {
-                            await audioService.pause()
+                            audioService.pause()
                         } else {
                             try? await audioService.play()
                         }

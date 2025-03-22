@@ -78,6 +78,20 @@ final class HymnalService: ObservableObject {
         loadRecentHymns()
     }
     
+    func forceUpdateDatabase() async {
+        isLoading = true
+        error = nil
+        
+        do {
+            try await dataService.forceUpdateDatabase()
+            // After updating the database, refresh the data
+            await refreshData()
+        } catch {
+            self.error = error
+            isLoading = false
+        }
+    }
+    
     // MARK: - Private Methods
     private func loadRecentHymns() {
         recentHymns = recentManager.getRecentHymns()

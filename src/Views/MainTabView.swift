@@ -5,9 +5,13 @@ struct MainTabView: View {
     @StateObject private var hymnalService = HymnalService.shared
     @StateObject private var screenService = ScreenService.shared
     @StateObject private var audioService = AudioService.shared
+    @StateObject private var readingService = ResponsiveReadingService.shared
     @AppStorage("showMiniPlayer") private var showMiniPlayer = true
     @State private var selectedTab = 0
     @Binding var deepLinkHymnNumber: Int?
+    @State private var navigateToHymn = false
+    @State private var selectedHymn: Hymn?
+    @State private var selectedReading: ResponsiveReading?
     
     private var safeAreaBottom: CGFloat {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -27,6 +31,13 @@ struct MainTabView: View {
                                 .overlay(alignment: .bottom) {
                                     Divider()
                                 }
+                        }
+                    }
+                    .navigationDestination(isPresented: $navigateToHymn) {
+                        if let hymn = selectedHymn {
+                            HymnDetailView(hymn: hymn)
+                        } else if let reading = selectedReading {
+                            ResponsiveReadingView(reading: reading)
                         }
                     }
             }
@@ -95,6 +106,55 @@ struct MainTabView: View {
             appearance.configureWithDefaultBackground()
             UITabBar.appearance().scrollEdgeAppearance = appearance
             UITabBar.appearance().standardAppearance = appearance
+            
+            // Handle deep link if present
+            handleDeepLink()
+        }
+        .onChange(of: deepLinkHymnNumber) { oldValue, newValue in
+            handleDeepLink()
+        }
+    }
+    
+    private func handleDeepLink() {
+        guard let hymnNumber = deepLinkHymnNumber else { return }
+        
+        // Check for responsive reading first (only in 1985 hymnal)
+        if hymnalService.currentLanguage == .english1985 && hymnNumber >= 696 && hymnNumber <= 920,
+           let reading = readingService.reading(number: hymnNumber) {
+            selectedTab = 0 // Switch to number pad tab
+            selectedReading = reading
+            selectedHymn = nil
+            navigateToHymn = true
+            
+            // Clear the deep link after handling
+            deepLinkHymnNumber = nil
+        } else if let hymn = hymnalService.hymn(number: hymnNumber) {
+            selectedTab = 0 // Switch to number pad tab
+            selectedHymn = hymn
+            selectedReading = nil
+            navigateToHymn = true
+            
+            // Clear the deep link after handling
+            deepLinkHymnNumber = nil
+        } else {
+            // If the hymn isn't found, we need to wait for hymnal service to load
+            Task {
+                await hymnalService.refreshData()
+                if hymnalService.currentLanguage == .english1985 {
+                    await readingService.loadReadings()
+                }
+                
+                // Try again after data is loaded
+                if let hymn = hymnalService.hymn(number: hymnNumber) {
+                    selectedTab = 0
+                    selectedHymn = hymn
+                    selectedReading = nil
+                    navigateToHymn = true
+                    
+                    // Clear the deep link after handling
+                    deepLinkHymnNumber = nil
+                }
+            }
         }
     }
 }

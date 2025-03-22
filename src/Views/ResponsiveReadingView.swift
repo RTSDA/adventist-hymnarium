@@ -8,69 +8,30 @@ struct ResponsiveReadingView: View {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: AppTheme.padding) {
+            VStack(alignment: .center, spacing: 24) {
                 Text(reading.title)
-                    .font(.title2)
+                    .scaledFontSize(fontSize + 4)
                     .fontWeight(.bold)
-                    .foregroundColor(AppTheme.textColor)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.bottom, AppTheme.padding)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
                 
                 if reading.sections.isEmpty {
                     Text(reading.formattedContent)
-                        .font(.system(size: fontSize))
-                        .foregroundColor(AppTheme.textColor)
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, AppTheme.padding)
+                        .scaledFontSize(fontSize)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(8)
+                        .padding(.horizontal)
                 } else {
-                    ForEach(reading.sections) { section in
-                        ReadingSectionView(section: section, fontSize: fontSize)
-                    }
-                }
-            }
-            .padding()
-        }
-        .background(AppTheme.backgroundColor)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    readingService.toggleFavorite(reading)
-                } label: {
-                    Image(systemName: readingService.isFavorite(reading) ? "heart.fill" : "heart")
-                        .foregroundColor(readingService.isFavorite(reading) ? AppTheme.accentColor : AppTheme.textColor)
-                }
-            }
-            
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Menu {
-                    Button {
-                        if fontSize > AppDefaults.minFontSize {
-                            fontSize -= 2
+                    VStack(alignment: .center, spacing: 24) {
+                        ForEach(reading.sections) { section in
+                            ReadingSectionView(section: section, fontSize: fontSize)
                         }
-                    } label: {
-                        Label("Decrease Font Size", systemImage: "textformat.size.smaller")
                     }
-                    
-                    Button {
-                        if fontSize < AppDefaults.maxFontSize {
-                            fontSize += 2
-                        }
-                    } label: {
-                        Label("Increase Font Size", systemImage: "textformat.size.larger")
-                    }
-                    
-                    Button {
-                        fontSize = AppDefaults.defaultFontSize
-                    } label: {
-                        Label("Reset Font Size", systemImage: "arrow.counterclockwise")
-                    }
-                } label: {
-                    Image(systemName: "textformat.size")
-                        .foregroundColor(AppTheme.textColor)
+                    .padding(.horizontal)
                 }
             }
+            .padding(.vertical)
+            .frame(maxWidth: .infinity)
         }
     }
 }
@@ -80,21 +41,22 @@ struct ReadingSectionView: View {
     let fontSize: Double
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .center, spacing: 12) {
             if let role = section.role {
                 Text(role)
-                    .font(.system(.subheadline, design: .serif))
-                    .foregroundColor(.secondary)
+                    .scaledFontSize(fontSize - 2)
                     .fontWeight(.semibold)
+                    .foregroundColor(.secondary)
             }
             
             Text(section.text)
-                .font(.system(size: fontSize))
-                .foregroundColor(AppTheme.textColor)
+                .scaledFontSize(fontSize)
+                .multilineTextAlignment(.center)
+                .lineSpacing(8)
+                .fixedSize(horizontal: false, vertical: true)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, AppTheme.padding)
-        .padding(.vertical, 4)
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal)
     }
 }
 

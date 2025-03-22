@@ -11,6 +11,7 @@ struct Hymn: Codable, Identifiable {
     var id: Int { number }
     
     // Sheet music functionality
+    @MainActor
     var sheetMusic: [UIImage]? {
         if languageId == HymnalLanguage.english1985.id {
             return SheetMusicService.shared.currentSheetMusic
