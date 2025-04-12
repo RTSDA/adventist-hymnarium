@@ -116,6 +116,22 @@ struct MainTabView: View {
     }
     
     private func handleDeepLink() {
+        // First check for reading deep link
+        if let readingNumber = UserDefaults.standard.object(forKey: "DeepLinkReadingNumber") as? Int {
+            if hymnalService.currentLanguage == .english1985 && readingNumber >= 696 && readingNumber <= 920,
+               let reading = readingService.reading(number: readingNumber) {
+                selectedTab = 0 // Switch to number pad tab
+                selectedReading = reading
+                selectedHymn = nil
+                navigateToHymn = true
+                
+                // Clear the reading number from UserDefaults
+                UserDefaults.standard.removeObject(forKey: "DeepLinkReadingNumber")
+                return
+            }
+        }
+        
+        // Then check for hymn deep link
         guard let hymnNumber = deepLinkHymnNumber else { return }
         
         // Check for responsive reading first (only in 1985 hymnal)
