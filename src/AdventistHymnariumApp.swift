@@ -58,6 +58,19 @@ struct AdventistHymnariumApp: App {
             }
         }
         
+        // Handle the format: adventisthymnarium://reading?number=123
+        if (url.scheme == "hymnarium" || url.scheme == "adventisthymnarium") && url.host == "reading" {
+            if let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+               let readingNumberItem = components.queryItems?.first(where: { $0.name == "number" }),
+               let readingNumberString = readingNumberItem.value,
+               let readingNumber = Int(readingNumberString) {
+                print("Opening reading #\(readingNumber) from deep link")
+                // Store the reading number in UserDefaults to be picked up by the app
+                UserDefaults.standard.set(readingNumber, forKey: "DeepLinkReadingNumber")
+                return
+            }
+        }
+        
         // Then check for specific hymn deep linking (legacy format)
         guard (url.scheme == "hymnarium" || url.scheme == "adventisthymnarium"),
               let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
