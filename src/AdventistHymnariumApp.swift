@@ -13,6 +13,7 @@ struct AdventistHymnariumApp: App {
     @StateObject private var storage = StorageService.shared
     @StateObject private var audioService = AudioService.shared
     @StateObject private var screenService = ScreenService.shared
+    @StateObject private var readingService = ResponsiveReadingService.shared
     @State private var deepLinkHymnNumber: Int?
     @AppStorage("fontSize") private var fontSize: Double = AppDefaults.defaultFontSize
     
@@ -30,6 +31,7 @@ struct AdventistHymnariumApp: App {
                 .environmentObject(storage)
                 .environmentObject(audioService)
                 .environmentObject(screenService)
+                .environmentObject(readingService)
                 .environment(\.fontScale, fontSize)
                 .onOpenURL { url in
                     handleDeepLink(url)
@@ -53,7 +55,15 @@ struct AdventistHymnariumApp: App {
                let hymnNumberString = hymnNumberItem.value,
                let hymnNumber = Int(hymnNumberString) {
                 print("Opening hymn #\(hymnNumber) from deep link")
-                deepLinkHymnNumber = hymnNumber
+                
+                // Ensure data is loaded before setting the deep link number
+                Task {
+                    await hymnalService.refreshData()
+                    if hymnalService.currentLanguage == .english1985 {
+                        await readingService.loadReadings()
+                    }
+                    deepLinkHymnNumber = hymnNumber
+                }
                 return
             }
         }
@@ -65,8 +75,16 @@ struct AdventistHymnariumApp: App {
                let readingNumberString = readingNumberItem.value,
                let readingNumber = Int(readingNumberString) {
                 print("Opening reading #\(readingNumber) from deep link")
-                // Store the reading number in UserDefaults to be picked up by the app
-                UserDefaults.standard.set(readingNumber, forKey: "DeepLinkReadingNumber")
+                
+                // Ensure data is loaded before storing the reading number
+                Task {
+                    await hymnalService.refreshData()
+                    if hymnalService.currentLanguage == .english1985 {
+                        await readingService.loadReadings()
+                    }
+                    // Store the reading number in UserDefaults to be picked up by the app
+                    UserDefaults.standard.set(readingNumber, forKey: "DeepLinkReadingNumber")
+                }
                 return
             }
         }
@@ -81,6 +99,14 @@ struct AdventistHymnariumApp: App {
             print("Invalid deep link format")
             return
         }
-        deepLinkHymnNumber = hymnNumber
+        
+        // Ensure data is loaded before setting the deep link number
+        Task {
+            await hymnalService.refreshData()
+            if hymnalService.currentLanguage == .english1985 {
+                await readingService.loadReadings()
+            }
+            deepLinkHymnNumber = hymnNumber
+        }
     }
 }
